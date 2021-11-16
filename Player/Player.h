@@ -10,7 +10,7 @@ class Player
 
 private:
     // Player current money (should be float number)
-    double money;
+    float money;
 
     // a boolean state to check whethe the Player is inJail or not
     bool jailed; // sorry for weird name ;(
@@ -25,17 +25,20 @@ private:
     string avatar;
 
 public:
+    // return the Player's current money
+    float Money();
 
-    double Money();
+    // return the Player's current position on Board
+    int Position();
+
+    // check whether the Player is in Jail or not
     bool isInJail();
 
 public:
 
-    // return the Player's current money
-    double getMoney();
+    
 
-    // return the Player's current position on Board
-    int getPosition();
+    
 
     // Increase (or decrease) Player's current money
     void earnMoney(const float&);
