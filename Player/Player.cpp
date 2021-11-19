@@ -2,7 +2,7 @@
 
 
 // Player Initializer with given money, jailed state, position, name and avatar
-Player::Player(int& newMoney, bool& newJailed, int& newPosition, string& newName, string& newAvatar){
+Player::Player(int newMoney, bool newJailed, int newPosition, string newName, string newAvatar){
     money = newMoney;
     jailed = newJailed;
     position = newPosition;
@@ -36,6 +36,15 @@ float Player::Money(){
 // return the Player's current position on Board
 int Player::Position(){
     return position;
+}
+
+
+string Player::Name(){
+    return name;
+}
+
+string Player::Avatar(){
+    return avatar;
 }
 
 

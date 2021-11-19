@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 #include <sstream>
 
@@ -31,6 +32,12 @@ public:
     // return the Player's current position on Board
     int Position();
 
+    // return the Player's current Name
+    string Name();
+
+    // return the Player's Avatar path
+    string Avatar();
+
     // check whether the Player is in Jail or not
     bool isInJail();
 
@@ -43,8 +50,10 @@ public:
     // set the Player's current money
     void setMoney(const float&);
 
+    // set Player Name
     void setName(string&);
 
+    // set Plauer Avatar
     void setAvatar(string&);
 
 public:
@@ -53,7 +62,8 @@ public:
     // Init the Player class
     Player();
 
-    Player(int&, bool&, int&, string&, string&);
+    // Init the Player class with giving information (money, jailedState, position, name, avatar)
+    Player(int, bool, int, string, string);
 
     // Deconstruct the Player class
     ~Player();
