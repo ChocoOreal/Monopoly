@@ -26,12 +26,12 @@ Player::~Player(){
 }
 
 
+// getter :>
 
 // return the Player's current money
 float Player::Money(){
     return money;
 }
-
 
 // return the Player's current position on Board
 int Player::Position(){
@@ -53,11 +53,14 @@ bool Player::isInJail(){
 }
 
 
-
 // Increase (or decrease) Player's current money
 void Player::earnMoney(const float& value){
     money += value;
 }
+
+
+
+
 
 
 
