@@ -36,20 +36,24 @@ public:
 
 public:
 
-    
-
-    
-
+    void changeInJail();
     // Increase (or decrease) Player's current money
     void earnMoney(const float&);
 
     // set the Player's current money
     void setMoney(const float&);
 
+    void setName(string&);
+
+    void setAvatar(string&);
+
 public:
+
 
     // Init the Player class
     Player();
+
+    Player(int&, bool&, int&, string&, string&);
 
     // Deconstruct the Player class
     ~Player();
