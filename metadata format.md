@@ -13,4 +13,7 @@ Ví dụ:
 
 Đối với các ô bàn cờ thì sẽ có:
 Cũng như trên, mỗi dòng là một thông tin, và một file sẽ chứa nhiều thông tin.
+
+```
 @ thông tin @ số tiền mua đất @ số tiền thuê @ giá mỗi căn nhà @ giá mỗi khách sạn 
+```
