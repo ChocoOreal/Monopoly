@@ -1,4 +1,5 @@
-Mục tiêu: Hoàn thiện giao diện bàn cờ (hiển thị bàn cờ, xúc xắc, quân cờ di chuyển)
+Mục tiêu: Hoàn thiện giao diện bàn cờ (hiển thị bàn cờ, xúc xắc, quân cờ di chuyển) và demo một số chức năng của các lớp dưới đây (xuất thông tin của các đối tượng sau khi thực thi phương thức của nó ra cửa sổ console là điều kiệu cần đạt được tối thiểu, nếu có thể sẽ xuất thông tin ra GUI)
+
 Thế Hoàng: 
 	+ Phần GUI (như trên)
 	+ Class Game
