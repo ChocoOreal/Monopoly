@@ -1,0 +1,9 @@
+Mục tiêu: Hoàn thiện giao diện bàn cờ (hiển thị bàn cờ, xúc xắc, quân cờ di chuyển)
+Thế Hoàng: 
+	+ Phần GUI (như trên)
+	+ Class Game
+Khâm:
+	+ Lớp Player
+	+ Lớp Dice
+Quỳnh Như:
+	+ Lớp Cell
