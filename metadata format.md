@@ -15,5 +15,5 @@ Ví dụ:
 Cũng như trên, mỗi dòng là một thông tin, và một file sẽ chứa nhiều thông tin.
 
 ```
-@ thông tin @ số tiền mua đất @ số tiền thuê @ giá mỗi căn nhà @ giá mỗi khách sạn 
+@ thông tin @ số tiền mua đất @ số tiền thuê @ số tiền để mua đất.
 ```
