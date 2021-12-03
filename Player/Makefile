@@ -1,6 +1,6 @@
 OBJS	= main.o Player.o
 SOURCE	= main.cpp Player.cpp
-HEADER	= Player.h
+HEADER	= Player.h Dice.h
 OUT	= main
 CC	 = g++
 FLAGS	 = -g -c -Wall

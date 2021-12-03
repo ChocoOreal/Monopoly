@@ -11,19 +11,22 @@ class Player
 
 private:
     // Player current money (should be float number)
-    float money;
+    float _money;
 
     // a boolean state to check whethe the Player is inJail or not
-    bool jailed; // sorry for weird name ;(
+    bool _jailed; // sorry for weird name ;(
 
     // the Player current position on the Board
-    int position;
+    int _position;
     
     // the Player username
-    string name;
+    string _name;
 
     // string avatar use to store a path to .jpeg file that's represent Player 
-    string avatar;
+    string _avatar;
+
+    // the Player id range from 0 to 3
+    int _id;
 
 public:
     // return the Player's current money
@@ -41,11 +44,14 @@ public:
     // check whether the Player is in Jail or not
     bool isInJail();
 
+    int ID(){
+        return _id;
+    }
 public:
 
     void changeInJail();
     // Increase (or decrease) Player's current money
-    void earnMoney(const float&);
+    void changeMoney(const float&);
 
     // set the Player's current money
     void setMoney(const float&);
@@ -55,6 +61,10 @@ public:
 
     // set Plauer Avatar
     void setAvatar(string&);
+
+    void setID(int& value){
+        _id = value;
+    }
 
 public:
 
