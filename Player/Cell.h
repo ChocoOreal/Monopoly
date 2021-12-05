@@ -30,7 +30,7 @@ public:
     Card();
     void drawCard (string& info, int& amnt, int& type);
     string toString(){return "";};
-    ~Card();
+    ~Card() {};
 };
 
 

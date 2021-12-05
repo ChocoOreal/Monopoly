@@ -30,7 +30,7 @@ void Card::drawCard (string& info, int& amnt, int& type) {
     type = Dice::Rand(1, 2);
     int i = Dice::Rand(1, 6);//random
     string seperator = " @ ";
-    int startPos = 0;
+    int startPos = 2;
     int foundPos = 0;
     int count = 0;
     string card;
