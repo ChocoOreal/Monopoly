@@ -15,7 +15,7 @@ public:
     //virtual int buildHotel() = 0;
     //virtual int buyLand() = 0;
     Cell(){}
-    virtual string toString() = 0;
+    virtual string toString() const = 0;
     virtual ~Cell() {};
     //virtual int rent();
 };
@@ -24,12 +24,12 @@ class Card: public Cell {
 private:
     string luckyCard[10];
     string chancesCard[10];
-
+    string currentCard;
 
 public:
     Card();
     void drawCard (string& info, int& amnt, int& type);
-    string toString(){return "";};
+    string toString() const {return currentCard;};
     ~Card() {};
 };
 
@@ -53,6 +53,6 @@ public:
     int buyLand(Player* player);
     int rent();
     int sellHouse();
-    string toString();
+    string toString() const {return _information;}
     ~NormalLand() {}
 };
