@@ -23,8 +23,10 @@ Mục tiêu: Hoàn thiện giao diện bàn cờ (hiển thị bàn cờ, xúc x
 Thế Hoàng: 
 - Phần GUI (như trên) (Done)
 - Class Game 
+
 Khâm:
 - Lớp Player (Done)
 - Lớp Dice (Done)
+
 Quỳnh Như:
 - Lớp Cell (có thêm một số class khác như là NormalLand và Card).
