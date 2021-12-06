@@ -58,6 +58,10 @@ void Player::changeMoney(const float& value){
     _money += value;
 }
 
+void Player::setPosition(const int& pos)
+{
+    _position = pos;
+}
 
 // setter methods
 
@@ -79,6 +83,10 @@ void Player::setAvatar(string& newAvatar){
     _avatar = newAvatar;
 }
 
+string Player::toString()
+{
+    return to_string(_id) + '_' + to_string(_money) + '_' + to_string(_position) + '_' + _name + '_';
+}
 
 
 

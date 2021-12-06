@@ -16,10 +16,22 @@ int main(){
 }*/
 
 int main () {
+    int ID = 1;
+    Player A(1000, false, 3, "Player A", "");
+    A.setID(ID);
+    cout << A.toString() << '\n';
+
+    getchar();
+
     Card c;
     string info;
     int amount;
     int type;
     c.drawCard(info, amount, type);
-    cout << info;
+    cout << info << '\n';
+
+    getchar();
+
+    if (type == 1) A.changeMoney(amount); else A.setPosition( A.Position() + amount );
+    cout << A.toString() << '\n';
 }

@@ -56,6 +56,8 @@ public:
     // set the Player's current money
     void setMoney(const float&);
 
+    void setPosition(const int&);
+
     // set Player Name
     void setName(string&);
 
@@ -65,6 +67,9 @@ public:
     void setID(int& value){
         _id = value;
     }
+
+public:
+    string toString();
 
 public:
 
