@@ -21,6 +21,7 @@ Card::Card() {
     chancesCard[7] = "@ Dang truoc co tai nan giao thong, lui 2 buoc @ -2";
     chancesCard[8] = "@ Dang truoc co tai nan giao thong, lui 2 buoc @ -2";
     chancesCard[9] = "@ Dang truoc co tai nan giao thong, lui 2 buoc @ -2";
+    currentCard = "";
 
 }
 
@@ -43,6 +44,7 @@ void Card::drawCard (string& info, int& amnt, int& type) {
     foundPos = card.find(seperator, startPos);
     count = foundPos - startPos;
     info = card.substr(startPos, count);
+    currentCard = info;
     startPos = foundPos + seperator.size();
     count = card.length() - startPos;
     string amnt_temp = card.substr(startPos, count);
@@ -131,7 +133,4 @@ NormalLand::NormalLand(string information) {
     _Owner = -1;
     _information.substr(2);
     
-}
-string NormalLand::toString() {
-    return _information;
 }
