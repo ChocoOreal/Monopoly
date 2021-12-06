@@ -1,5 +1,5 @@
 # Github đồ án TH OOP của 20CTT1TN3
-
+"Thầy rất là mong chờ vào cái sản phẩm này của các em" - GV. Trần Anh Duy 2021.
 ## Giảng viên hướng dẫn:
 - GV. Trần Anh Duy
 
