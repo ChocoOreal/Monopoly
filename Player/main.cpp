@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Dice.h"
+#include "Game.h"
 #include <iostream>
 
 #include "Cell.h"
@@ -34,4 +35,9 @@ int main () {
 
     if (type == 1) A.changeMoney(amount); else A.setPosition( A.Position() + amount );
     cout << A.toString() << '\n';
+
+    Game* bank = new Game(4);
+    bank->ranking();
+    delete bank;
+
 }

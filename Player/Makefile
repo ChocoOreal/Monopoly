@@ -1,6 +1,6 @@
-OBJS	= main.o Player.o Cell.o
-SOURCE	= main.cpp Player.cpp Cell.cpp
-HEADER	= Player.h Dice.h Cell.h
+OBJS	= main.o Game.o Player.o Cell.o
+SOURCE	= main.cpp Game.cpp Player.cpp Cell.cpp
+HEADER	= Game.h Player.h Cell.h Dice.h
 OUT	= main
 CC	 = g++
 FLAGS	 = -g -c -Wall
@@ -12,11 +12,16 @@ all: $(OBJS)
 main.o: main.cpp
 	$(CC) $(FLAGS) main.cpp 
 
+Game.o: Game.cpp
+	$(CC) $(FLAGS) Game.cpp 
+
 Player.o: Player.cpp
 	$(CC) $(FLAGS) Player.cpp 
 
 Cell.o: Cell.cpp
-	$(CC) $(FLAGS)  Cell.cpp
+	$(CC) $(FLAGS) Cell.cpp 
+
+
 clean:
 	rm -f $(OBJS) $(OUT)
 

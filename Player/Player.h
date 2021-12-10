@@ -8,7 +8,7 @@ class Player
 {
 public:
     static int InstanceCount;
-// not sure what to put here yet
+    // not sure what to put here yet
 
 private:
     // Player current money (should be float number)
@@ -19,11 +19,11 @@ private:
 
     // the Player current position on the Board
     int _position;
-    
+
     // the Player username
     string _name;
 
-    // string avatar use to store a path to .jpeg file that's represent Player 
+    // string avatar use to store a path to .jpeg file that's represent Player
     string _avatar;
 
     // the Player id range from 0 to 3
@@ -45,27 +45,29 @@ public:
     // check whether the Player is in Jail or not
     bool isInJail();
 
-    int ID(){
+    int ID()
+    {
         return _id;
     }
-public:
 
+public:
     void changeInJail();
     // Increase (or decrease) Player's current money
-    void changeMoney(const float&);
+    void changeMoney(const float &);
 
     // set the Player's current money
-    void setMoney(const float&);
+    void setMoney(const float &);
 
-    void setPosition(const int&);
+    void setPosition(const int &);
 
     // set Player Name
-    void setName(string&);
+    void setName(string &);
 
     // set Plauer Avatar
-    void setAvatar(string&);
+    void setAvatar(string &);
 
-    void setID(int& value){
+    void setID(int &value)
+    {
         _id = value;
     }
 
@@ -73,8 +75,6 @@ public:
     string toString();
 
 public:
-
-
     // Init the Player class
     Player();
 
