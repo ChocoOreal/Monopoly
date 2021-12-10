@@ -65,11 +65,12 @@ void Mortage::execute()
 {
     int idPlayer = (*_idChose)[0];
     int idLand = (*_idChose)[1];
+    int price(0);
     Player* player = (*_listPlayer)[idPlayer];
     NormalLand *cell = dynamic_cast< NormalLand* > ( (*_listCell)[ idLand ] );
 
-    cell->Mortgage();
-    //CHANGE MONEY
+    cell->Mortgage(price);
+    player->changeMoney(price);
 }
 
 Redeem::Redeem(vector <Player*> &_listPlayer, vector <int> &_idChose)
@@ -99,7 +100,15 @@ void Build::execute()
     Player* player = (*_listPlayer)[idPlayer];
     NormalLand *cell = dynamic_cast< NormalLand* > ( (*_listCell)[ player->Position() ] );
 
-    //CHECK NUMBER OF HOUSE TO CALL BUILD HOUSE FUNCTION OR BUILD HOTEL FUNTION RESPECTIVELY
-    //CHANGE PLAYER MONEY
+    player->changeMoney( cell->build() );
+}
+
+void ActivateCell::execute()
+{
+    //Check type of cell
+    if ("RealEastate")
+    {
+        //Do operation
+    }
 }
 

@@ -100,6 +100,7 @@ class ActivateCell : public Command
 {
     private:
         Player* _player;
+        Cell* _cell;
 
     public:
         ActivateCell(Player &_player);

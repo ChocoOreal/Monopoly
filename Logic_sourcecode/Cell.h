@@ -12,6 +12,7 @@ class Cell {
 public:
     Cell(){}
     virtual string toString() const = 0;
+    //virtual void activateCell(Player *player) {};
     virtual ~Cell() {};
 };
 
@@ -35,6 +36,7 @@ protected:
     bool _isMortgage;
     string _information;
     short _owner;
+    
 public:
     RealEstate();
     RealEstate(string information);
@@ -46,6 +48,19 @@ public:
     
 
 };
+
+/*
+void activateCell(Player *player)
+{
+    if (_owner == player->ID())
+    else
+    {
+        if (_owner != 0)
+        {
+            owner->changeMoney( rent(player->ID() ) );
+        }
+    }
+}*/
 
 class NormalLand: public RealEstate {
 private:
