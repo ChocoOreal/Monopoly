@@ -105,6 +105,7 @@ int NormalLand::buildHouse() {
 //chua xong
 int NormalLand::buildHotel() {
     _numberOfHotel++;
+    _numberOfHouse = 0;
     _rentPrice *= COEFFICIENT;
     return _housePrice;
 }

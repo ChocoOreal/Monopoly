@@ -16,6 +16,8 @@ int main(){
     }
 }*/
 int Player::InstanceCount = 0;
+int Railroad::playerOwnerNum[4] = {};
+
 int main () {
     int ID = 1;
     Player A(1000, false, 3, "Player A", "");
