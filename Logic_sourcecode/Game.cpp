@@ -1,20 +1,20 @@
 #include "Game.h"
 
 Game::Game(){
-    _currentPlayer = 0;
+    _idTurnPlayer = 0;
     initializePlayer(0);
 }
 
 Game::Game(int number){
-    _currentPlayer = number;
+    _idTurnPlayer = number;
     initializePlayer(number);
 }
 
 void Game::initializePlayer(int numberOfPlayer)
 {
-    _currentPlayer = numberOfPlayer;
-    _Players.resize(numberOfPlayer);
-    for (Player *&curPlayer : _Players)
+    _idTurnPlayer = numberOfPlayer;
+    _listPlayer.resize(numberOfPlayer);
+    for (Player *&curPlayer : _listPlayer)
     {
         curPlayer = new Player;
     }
@@ -22,8 +22,8 @@ void Game::initializePlayer(int numberOfPlayer)
 
 void Game::endGame()
 {
-    _currentPlayer = 0;
-    for(Player*& curPlayer: _Players){
+    _idTurnPlayer = 0;
+    for(Player*& curPlayer: _listPlayer){
         if (curPlayer != NULL){
             delete curPlayer;
         }

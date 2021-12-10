@@ -7,9 +7,9 @@
 class Game
 {
 private:
-    vector<Player *> _Players;
+    vector<Player *> _listPlayer;
     //Board board; // Need the Board class ASAP
-    int _currentPlayer;
+    int _idTurnPlayer;
 
     void initializePlayer(int);
     void endGame();
@@ -18,7 +18,7 @@ public:
     Game(int);
 
     void ranking(){
-        for(Player* curPlayer: _Players){
+        for(Player* curPlayer: _listPlayer){
             cout << curPlayer->toString() << '\n';
         }
     }
