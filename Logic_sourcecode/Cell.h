@@ -5,6 +5,7 @@
 
 #include <sstream>
 #define COEFFICIENT 1.2
+#define HOTELCOEFFICIENT 1.5
 using namespace std;
 
 class Cell {
@@ -37,7 +38,7 @@ protected:
 public:
     RealEstate();
     RealEstate(string information);
-    virtual bool Mortgage();
+    virtual bool Mortgage(int& amnt);
     int buyLand(Player* player);
     virtual int rent(short& receiver);
     string toString() const {return _information;}
@@ -56,9 +57,8 @@ private:
 public:
     NormalLand();
     NormalLand(string information);
-    int buildHouse();
-    int buildHotel();
-    bool Mortgage();
+    int build();
+    bool Mortgage(int& amnt);
     int sellHouse();
     ~NormalLand() {}
 };

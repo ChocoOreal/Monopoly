@@ -69,7 +69,7 @@ int RealEstate::rent(short& receiver) {
     return _rentPrice;//so tien phai tru cua thang dang dung, so tien cong cho thang owner
 }
 
-bool RealEstate::Mortgage() {
+bool RealEstate::Mortgage(int& amnt) {
     if (_isMortgage) return false;
     _isMortgage = true;
     return true;
@@ -96,20 +96,32 @@ int NormalLand::sellHouse() {
 
 
 //chua xong
-int NormalLand::buildHouse() {
-    _numberOfHouse++;
-    _rentPrice *= COEFFICIENT;
+int NormalLand::build() {
+    if (_numberOfHouse < 4 && _numberOfHotel == 0) {
+        _numberOfHouse++;
+        _rentPrice *= COEFFICIENT;
+        
+    }
+    else if (_numberOfHouse == 4) {
+        //xuat ra dong "Da co du 4 nha, can nang cap len khach san"
+        //neu nguoi choi dong y nang cap thi reset so nha, doi gia thue, tang so khach san
+        _numberOfHouse = 0;
+        _numberOfHotel++;
+        _rentPrice = 1;
+    }
+    else {
+        
+        _numberOfHotel++;
+        _rentPrice = HOTELCOEFFICIENT;
+    }
+    
+    
     return _housePrice;
 }
 
 //chua xong
-int NormalLand::buildHotel() {
-    _numberOfHotel++;
-    _numberOfHouse = 0;
-    _rentPrice *= COEFFICIENT;
-    return _housePrice;
-}
-bool NormalLand::Mortgage() {
+
+bool NormalLand::Mortgage(int& amnt) {
     if (_numberOfHotel + _numberOfHouse > 0 || _isMortgage == true) {
         return false;
     }
