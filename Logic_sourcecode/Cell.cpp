@@ -107,12 +107,12 @@ int NormalLand::build() {
         //neu nguoi choi dong y nang cap thi reset so nha, doi gia thue, tang so khach san
         _numberOfHouse = 0;
         _numberOfHotel++;
-        _rentPrice = 1;
+        _rentPrice = HOTELCOEFFICIENT;
     }
     else {
         
         _numberOfHotel++;
-        _rentPrice = HOTELCOEFFICIENT;
+        _rentPrice *= HOTELCOEFFICIENT;
     }
     
     
