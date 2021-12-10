@@ -7,17 +7,11 @@
 #define COEFFICIENT 1.2
 using namespace std;
 
-
 class Cell {
 public:
-    //virtual bool Mortgage() = 0;
-    //virtual int buildHouse() = 0;
-    //virtual int buildHotel() = 0;
-    //virtual int buyLand() = 0;
     Cell(){}
     virtual string toString() const = 0;
     virtual ~Cell() {};
-    //virtual int rent();
 };
 
 class Card: public Cell {
@@ -33,16 +27,31 @@ public:
     ~Card() {};
 };
 
-
-class NormalLand: public Cell {
-private:
+class RealEstate: public Cell {
+protected:
     int _buyPrice;
     int _rentPrice;
     bool _isMortgage;
     string _information;
+    short _owner;
+public:
+    RealEstate();
+    RealEstate(string information);
+    virtual bool Mortgage();
+    int buyLand(Player* player);
+    virtual int rent(short& receiver);
+    string toString() const {return _information;}
+    ~RealEstate() {}
+    
+
+};
+
+class NormalLand: public RealEstate {
+private:
+    
     int _numberOfHouse;
     int _numberOfHotel;
-    short _Owner;
+    
     int _housePrice;
 public:
     NormalLand();
@@ -50,9 +59,23 @@ public:
     int buildHouse();
     int buildHotel();
     bool Mortgage();
-    int buyLand(Player* player);
-    int rent();
     int sellHouse();
-    string toString() const {return _information;}
     ~NormalLand() {}
+};
+
+class Factory: public RealEstate {
+
+public:
+    Factory():RealEstate(){};
+    Factory(string information):RealEstate(information){};
+    int rent(short& receiver);
+};
+
+class Railroad: public RealEstate {
+private:
+    static int playerOwnerNum[4]; //nguoi choi co id i so huu so manh dat playerOwnerNum[i] 
+public:
+    Railroad():RealEstate() {}
+    Railroad(string information):RealEstate(information){};
+    int rent(short& receiver);
 };

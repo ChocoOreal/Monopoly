@@ -55,6 +55,36 @@ void Card::drawCard (string& info, int& amnt, int& type) {
 
 
 /* 
+    RealEstate implement
+*/
+
+int RealEstate::buyLand(Player* player) {
+    _owner = player -> ID();
+    
+    return _buyPrice;
+}
+
+int RealEstate::rent(short& receiver) {
+    receiver = _owner;
+    return _rentPrice;//so tien phai tru cua thang dang dung, so tien cong cho thang owner
+}
+
+bool RealEstate::Mortgage() {
+    if (_isMortgage) return false;
+    _isMortgage = true;
+    return true;
+
+}
+
+RealEstate::RealEstate(){
+    _buyPrice = 0;
+    _rentPrice = 0;
+    _isMortgage = 0;
+    _information = "";
+    _owner = -1;
+}
+
+/*
     NormalLand implement
 */
 
@@ -87,13 +117,7 @@ bool NormalLand::Mortgage() {
         return true;
     }
 }
-int NormalLand::buyLand(Player* player) {
-    _Owner = player -> ID();
-    return _buyPrice;
-}
-int NormalLand::rent() {
-    return _rentPrice;
-}
+
 //information doc tu file luc initialize
 NormalLand::NormalLand(string information) {
     // "@ chu tren the @ gia mua dat @ gia thue @ gia nha"
@@ -130,7 +154,63 @@ NormalLand::NormalLand(string information) {
     _isMortgage = false;
     _numberOfHotel = 0;
     _numberOfHouse = 0;
-    _Owner = -1;
+    _owner = -1;
     _information.substr(2);
     
+    
+}
+
+/*
+
+    Railroad implement
+
+*/
+
+
+int Railroad::rent(short& receiver) {
+    
+    receiver = _owner;
+    if (receiver == -1) return 0;
+    return _rentPrice * playerOwnerNum[_owner];
+}
+
+/*
+
+    Factory implement
+
+*/
+//this is the true rent price, not real rent price (does not include value of dice in resulting value)
+int Factory::rent(short& receiver) {
+    receiver = _owner;
+    if (receiver == -1) return 0;
+    return _rentPrice;
+}
+RealEstate::RealEstate(string information) {
+    //@ thong tin @ gia mua @ gia thue
+    string separator = " @ ";
+    string info;
+    string value;
+    string buy_price;
+    string rent_price;
+    int foundPos = 0;
+    int startPos = 0;
+    foundPos = information.find(separator, startPos);
+    int count = foundPos - startPos;
+    _information = information.substr(startPos, count);
+    
+    startPos = foundPos + separator.length();
+    foundPos = information.find(separator, startPos);
+    count = foundPos - startPos;
+    buy_price = information.substr(startPos, count);
+    stringstream bp (buy_price);
+    bp >> _buyPrice;
+    startPos = foundPos + separator.length();
+    count = information.length() - startPos;
+    rent_price = information.substr(startPos, count);
+    stringstream rp (rent_price);
+    rp >> _rentPrice;
+    _isMortgage = false;
+    
+    _owner = -1;
+    _information.substr(2);
 }

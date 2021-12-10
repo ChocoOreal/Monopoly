@@ -33,6 +33,10 @@ int main () {
 
     getchar();
 
+    Factory ft("Nha may dien @ 300 @ 200");
+
+    getchar();
+
     if (type == 1) A.changeMoney(amount); else A.setPosition( A.Position() + amount );
     cout << A.toString() << '\n';
 
