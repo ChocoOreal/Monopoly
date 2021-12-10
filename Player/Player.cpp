@@ -8,6 +8,8 @@ Player::Player(int newMoney, bool newJailed, int newPosition, string newName, st
     _position = newPosition;
     _name = newName;
     _avatar = newAvatar;
+    _id = Player::InstanceCount;
+    Player::InstanceCount++;
 }
 
 // Player Initializer.
@@ -17,6 +19,8 @@ Player::Player(){
     _position = 0;
     _name = "";
     _avatar = "";
+    _id = Player::InstanceCount;
+    Player::InstanceCount++;
 }
 
 

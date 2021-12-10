@@ -14,7 +14,7 @@ int main(){
         cout << cnt[i] << ' ';
     }
 }*/
-
+int Player::InstanceCount = 0;
 int main () {
     int ID = 1;
     Player A(1000, false, 3, "Player A", "");

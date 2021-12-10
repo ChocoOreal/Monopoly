@@ -6,7 +6,8 @@ using namespace std;
 
 class Player
 {
-
+public:
+    static int InstanceCount;
 // not sure what to put here yet
 
 private:
