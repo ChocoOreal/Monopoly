@@ -8,6 +8,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     setupMainScene();
+
+    //WILL DELETING: check show cell info
+    cellData = new QStandardItemModel(4, 4, this);
+    cellDataSwap = new QStandardItemModel(4, 4, this);
+    ui->tableCellInfo->setModel(cellDataSwap);
+    for (int i = 1; i <= 40; i++) this->updateCellData(i, vector<string>(10, std::to_string(i) ) );
 }
 
 void MainWindow::setupMainScene()
@@ -23,7 +29,7 @@ void MainWindow::setupMainScene()
 
     //Load Dice image and change position/size. Stick it to mainScene
     setDiceImage(dice1, 6, 1);
-    setDiceImage(dice2 ,4, 2);
+    setDiceImage(dice2 , 4, 2);
 
     //Load Cell area control
     setupCell();
@@ -43,7 +49,7 @@ void MainWindow::setupCell()
     //Cells at bottom
     for (int i = 10; i >= 2; i--)
     {
-        cellItem[i] = new CellItem( QPointF(tmp,890), 84, 133 );
+        cellItem[i] = new CellItem( QPointF(tmp,890), 84, 133, i, this);
         scene->addItem( cellItem[i] );
         cellItem[i]->setPos( QPointF(tmp, 890) );
         tmp += 84;
@@ -53,7 +59,7 @@ void MainWindow::setupCell()
     tmp = 134;
     for (int i = 22; i <= 30; i++)
     {
-        cellItem[i] = new CellItem( QPointF(tmp, 0), 84, 133 );
+        cellItem[i] = new CellItem( QPointF(tmp, 0), 84, 133, i, this);
         scene->addItem( cellItem[i] );
         cellItem[i]->setPos( QPointF(tmp, 0) );
         tmp += 84;
@@ -63,7 +69,7 @@ void MainWindow::setupCell()
     tmp = 134;
     for (int i = 20; i >= 12; i--)
     {
-        cellItem[i] = new CellItem( QPointF(0, tmp), 133, 84 );
+        cellItem[i] = new CellItem( QPointF(0, tmp), 133, 84, i, this);
         scene->addItem( cellItem[i] );
         cellItem[i]->setPos( QPointF(0, tmp) );
         tmp += 84;
@@ -73,25 +79,25 @@ void MainWindow::setupCell()
     tmp = 134;
     for (int i = 32; i <= 40; i++)
     {
-        cellItem[i] = new CellItem( QPointF(890, tmp), 133, 84 );
+        cellItem[i] = new CellItem( QPointF(890, tmp), 133, 84, i, this);
         scene->addItem( cellItem[i] );
         cellItem[i]->setPos( QPointF(890, tmp) );
         tmp += 84;
     }
 
-    cellItem[1] = new CellItem( QPointF(890, 890), 134, 134);
+    cellItem[1] = new CellItem( QPointF(890, 890), 134, 134, 1, this);
     scene->addItem( cellItem[1] );
     cellItem[1]->setPos( QPointF(890, 890) );
 
-    cellItem[11] = new CellItem( QPointF(0, 890), 134, 134);
+    cellItem[11] = new CellItem( QPointF(0, 890), 134, 134, 11, this);
     scene->addItem( cellItem[11] );
     cellItem[11]->setPos( QPointF(0, 890) );
 
-    cellItem[21] = new CellItem( QPointF(0, 0), 134, 134);
+    cellItem[21] = new CellItem( QPointF(0, 0), 134, 134, 21, this);
     scene->addItem( cellItem[21] );
     cellItem[21]->setPos( QPointF(0, 0) );
 
-    cellItem[31] = new CellItem( QPointF(890, 0), 134, 134);
+    cellItem[31] = new CellItem( QPointF(890, 0), 134, 134, 31, this);
     scene->addItem( cellItem[31] );
     cellItem[31]->setPos( QPointF(890, 0) );
 
@@ -124,6 +130,23 @@ void MainWindow::setPiece(QGraphicsPixmapItem *&piece, int idCell)
 {
     piece->setParentItem( cellItem[idCell] );
     piece->setPos( cellItem[idCell]->getWidth() / 4,  cellItem[idCell]->getHeight() / 4 );
+}
+
+void MainWindow::showCellInfo(int idCell)
+{
+    for (int i = 0; i < 40; i++) ui->tableCellInfo->hideColumn(i);
+    ui->tableCellInfo->showColumn(idCell - 1);
+}
+
+//Update cell model by info given by class Cell
+void MainWindow::updateCellData(int idCell, vector <string> info)
+{
+    for (size_t i = 0; i < info.size(); i++)
+    {
+        QStandardItem* item = new QStandardItem( QString::fromStdString(info[i]) );
+        cellData->setItem(idCell - 1, i, item);
+        cellDataSwap->setItem(i, idCell-1, item->clone());
+    }
 }
 
 //Resize mainScene automatically when Main Window show up

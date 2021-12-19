@@ -1,96 +1,112 @@
 #pragma once
-#include "Dice.h"
-#include "Player.h"
-#include <string>
 
+#include <string>
 #include <sstream>
+
+class IGame;
+
+using std::string;
+
 #define COEFFICIENT 1.2
 #define HOTELCOEFFICIENT 1.5
-using namespace std;
 
 class Cell {
-public:
-    Cell(){}
-    virtual string toString() const = 0;
-    //virtual void activateCell(Player *player) {};
-    virtual ~Cell() {};
+
+    public:
+        virtual string toString() = 0;
+        virtual void activateCell(int idPlayer) = 0;
+
+        virtual ~Cell() {};
 };
 
 class Card: public Cell {
-private:
-    string luckyCard[10];
-    string chancesCard[10];
-    string currentCard;
 
-public:
-    Card();
-    void drawCard (string& info, int& amnt, int& type);
-    string toString() const {return currentCard;};
-    ~Card() {};
+    private:
+        IGame *iGame;
+        string luckyCard[10];
+        string chancesCard[10];
+        string currentCard;
+
+    public:
+        Card();
+
+        void drawCard (string& info, int amnt, int type);
+
+        string toString() { return currentCard; }
+        void activateCell(int idPlayer) {};
+        
+        ~Card() {}
 };
 
 class RealEstate: public Cell {
-protected:
-    int _buyPrice;
-    int _rentPrice;
-    bool _isMortgage;
-    string _information;
-    short _owner;
-    
-public:
-    RealEstate();
-    RealEstate(string information);
-    virtual bool Mortgage(int& amnt);
-    int buyLand(Player* player);
-    virtual int rent(short& receiver);
-    string toString() const {return _information;}
-    ~RealEstate() {}
-    
 
+    protected:
+        IGame *iGame;
+        int _buyPrice;
+        int _rentPrice;
+        bool _isMortgage;
+        short _owner;
+        string _information;
+        
+    public:
+        RealEstate();
+        RealEstate(string information);
+
+        void mortgage(int &money);
+        
+        string toString() { return _information; }
+        void activateCell(int idPlayer);
+
+        virtual void buyLand(int idPlayer, int &price);
+        virtual void rent(int &price) {};
+
+        ~RealEstate() {}
 };
 
-/*
-void activateCell(Player *player)
-{
-    if (_owner == player->ID())
-    else
-    {
-        if (_owner != 0)
-        {
-            owner->changeMoney( rent(player->ID() ) );
-        }
-    }
-}*/
-
 class NormalLand: public RealEstate {
-private:
-    
-    int _numberOfHouse;
-    int _numberOfHotel;
-    
-    int _housePrice;
-public:
-    NormalLand();
-    NormalLand(string information);
-    int build();
-    bool Mortgage(int& amnt);
-    int sellHouse();
-    ~NormalLand() {}
+
+    private:    
+        int _numberOfHouse;
+        int _numberOfHotel;
+        int _housePrice;
+
+    public:
+        NormalLand();
+        NormalLand(string information);
+
+        void build(int &price);
+        void sellHouse(int &money);
+
+        void rent(int &price) {};
+        
+        ~NormalLand() {}
 };
 
 class Factory: public RealEstate {
 
-public:
-    Factory():RealEstate(){};
-    Factory(string information):RealEstate(information){};
-    int rent(short& receiver);
+    private:
+        bool isSameOwner = false;
+
+    public:
+        Factory() : RealEstate() {};
+        Factory(string information) : RealEstate(information) {};
+        
+        void rent(int &money);
 };
 
 class Railroad: public RealEstate {
-private:
-    static int playerOwnerNum[4]; //nguoi choi co id i so huu so manh dat playerOwnerNum[i] 
-public:
-    Railroad():RealEstate() {}
-    Railroad(string information):RealEstate(information){};
-    int rent(short& receiver);
+
+    private:
+        static int playerOwnerNum[4]; //nguoi choi co id i so huu so manh dat playerOwnerNum[i] 
+
+    public:
+        Railroad() : RealEstate() {};
+        Railroad(string information) : RealEstate(information) {};
+
+        void rent(int &money);
 };
+
+class Go : public Cell {};
+class PayTax : public Cell {};
+class GoToJail : public Cell {};
+class JailCell : public Cell {};

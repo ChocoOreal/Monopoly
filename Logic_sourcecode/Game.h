@@ -1,30 +1,51 @@
 #pragma once
-#include "Player.h"
-#include "Cell.h"
-#include "Dice.h"
+
+#include "IGame.h"
 #include <vector>
+#include <iostream>
+#include <string>
 
-class Game
+class Player;
+class Cell;
+class GameCommand;
+class RunningGameMode;
+
+using std::vector; using std::cout; using std::string;
+
+class Game : public IGame
 {
-private:
-    vector<Player *> _listPlayer;
-    //Board board; // Need the Board class ASAP
-    int _idTurnPlayer;
+    private:
+        vector <Player *> _listPlayer;
+        vector <Cell *> _listCell;
+        int _idTurnPlayer;
+        int _dice1, _dice2;
 
-    void initializePlayer(int);
-    void endGame();
-public:
-    Game();
-    Game(int);
+        //This is the query or notification that game need to show for player deciding or knowing
+        struct Notify
+        {
+            string textNotify;
+            vector <string> listQuery;
+        } _notification;
 
-    void ranking(){
-        for(Player* curPlayer: _listPlayer){
-            cout << curPlayer->toString() << '\n';
+        void initializePlayer(int);
+        void endGame();
+        
+    public:
+        Game();
+        Game(int);
+
+        void rollDice();
+        int getDice();
+        void transferMoney(int idPlayerFrom, int idPlayerTo);
+        void notify(string text, vector <string> listQuery);
+
+        void ranking();
+
+        ~Game()
+        {
+            endGame();
         }
-    }
 
-    ~Game()
-    {
-        endGame();
-    }
+        friend GameCommand;
+        friend RunningGameMode;
 };

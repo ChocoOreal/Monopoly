@@ -1,4 +1,7 @@
 #include "Player.h"
+#include <iostream>
+
+using std::string; using std::to_string;
 
 // Player Initializer with given _money, _jailed state, _position, _name and _avatar
 Player::Player(int newMoney, bool newJailed, int newPosition, string newName, string newAvatar)
@@ -15,9 +18,9 @@ Player::Player(int newMoney, bool newJailed, int newPosition, string newName, st
 // Player Initializer.
 Player::Player()
 {
-    _money = 0;
+    _money = 2000;
     _jailed = false;
-    _position = 0;
+    _position = 1;
     _name = "";
     _avatar = "";
     _id = Player::InstanceCount;

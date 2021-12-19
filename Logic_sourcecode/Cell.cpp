@@ -1,4 +1,10 @@
 #include "Cell.h"
+#include "Dice.h"
+#include "IGame.h"
+#include <string>
+#include <sstream>
+
+using std::string; using std::stringstream;
 
 Card::Card() {
     luckyCard[0] = "@ Vuot den do, phat 200 dong @ -200";
@@ -22,11 +28,10 @@ Card::Card() {
     chancesCard[8] = "@ Dang truoc co tai nan giao thong, lui 2 buoc @ -2";
     chancesCard[9] = "@ Dang truoc co tai nan giao thong, lui 2 buoc @ -2";
     currentCard = "";
-
 }
 
-//chua xong
-void Card::drawCard (string& info, int& amnt, int& type) {
+void Card::drawCard (string& info, int amnt, int type) {
+
     //@ chu tren the @ gia tri cua the (duong hoac am)\n
     type = Dice::Rand(1, 2);
     int i = Dice::Rand(1, 6);//random
@@ -52,31 +57,11 @@ void Card::drawCard (string& info, int& amnt, int& type) {
     ss >> amnt;
 }
 
-
-
 /* 
     RealEstate implement
 */
 
-int RealEstate::buyLand(Player* player) {
-    _owner = player -> ID();
-    
-    return _buyPrice;
-}
-
-int RealEstate::rent(short& receiver) {
-    receiver = _owner;
-    return _rentPrice;//so tien phai tru cua thang dang dung, so tien cong cho thang owner
-}
-
-bool RealEstate::Mortgage(int& amnt) {
-    if (_isMortgage) return false;
-    _isMortgage = true;
-    return true;
-
-}
-
-RealEstate::RealEstate(){
+RealEstate::RealEstate() {
     _buyPrice = 0;
     _rentPrice = 0;
     _isMortgage = 0;
@@ -84,51 +69,52 @@ RealEstate::RealEstate(){
     _owner = -1;
 }
 
+void RealEstate::activateCell(int idPlayer)
+{
+    if (_owner == 0) return;
+    if (_isMortgage) return;
+    if (_owner == idPlayer)
+    {
+        int price;
+        this->rent(price);
+        iGame->transferMoney(idPlayer, _owner);
+    }
+}
+
+void RealEstate::mortgage(int &money) {
+    _isMortgage = true;
+    money = _buyPrice / 2;
+}
+
+void RealEstate::buyLand(int idPlayer, int &price) {
+    _owner = idPlayer;
+    price = _buyPrice;
+}
+
 /*
     NormalLand implement
 */
 
-int NormalLand::sellHouse() {
+void NormalLand::sellHouse(int &money) {
     _numberOfHouse--;
     _rentPrice /= COEFFICIENT;
-    return _housePrice;
+    money = _buyPrice / 2;
 }
 
-
-//chua xong
-int NormalLand::build() {
-    if (_numberOfHouse < 4 && _numberOfHotel == 0) {
+void NormalLand::build(int &price) {
+    if (_numberOfHouse < 4) {
         _numberOfHouse++;
         _rentPrice *= COEFFICIENT;
-        
     }
-    else if (_numberOfHouse == 4) {
+    else {
         //xuat ra dong "Da co du 4 nha, can nang cap len khach san"
         //neu nguoi choi dong y nang cap thi reset so nha, doi gia thue, tang so khach san
         _numberOfHouse = 0;
-        _numberOfHotel++;
+        _numberOfHotel = 1;
         _rentPrice = HOTELCOEFFICIENT;
     }
-    else {
-        
-        _numberOfHotel++;
-        _rentPrice *= HOTELCOEFFICIENT;
-    }
     
-    
-    return _housePrice;
-}
-
-//chua xong
-
-bool NormalLand::Mortgage(int& amnt) {
-    if (_numberOfHotel + _numberOfHouse > 0 || _isMortgage == true) {
-        return false;
-    }
-    else {
-        _isMortgage = false;
-        return true;
-    }
+    price = _housePrice;
 }
 
 //information doc tu file luc initialize
@@ -169,8 +155,6 @@ NormalLand::NormalLand(string information) {
     _numberOfHouse = 0;
     _owner = -1;
     _information.substr(2);
-    
-    
 }
 
 /*
@@ -179,12 +163,8 @@ NormalLand::NormalLand(string information) {
 
 */
 
-
-int Railroad::rent(short& receiver) {
-    
-    receiver = _owner;
-    if (receiver == -1) return 0;
-    return _rentPrice * playerOwnerNum[_owner];
+void Railroad::rent(int &money) {
+    money = _rentPrice * (int)pow(2, playerOwnerNum[_owner] - 1);
 }
 
 /*
@@ -192,12 +172,12 @@ int Railroad::rent(short& receiver) {
     Factory implement
 
 */
+
 //this is the true rent price, not real rent price (does not include value of dice in resulting value)
-int Factory::rent(short& receiver) {
-    receiver = _owner;
-    if (receiver == -1) return 0;
-    return _rentPrice;
+void Factory::rent(int &money) {
+    if (isSameOwner) money = 10 * iGame->getDice() ; else money = 4 * iGame->getDice(); //FUNCTION GET DICE OF GAME CLASS
 }
+
 RealEstate::RealEstate(string information) {
     //@ thong tin @ gia mua @ gia thue
     string separator = " @ ";

@@ -1,48 +1,57 @@
 #include "Command.h"
+#include "Game.h"
+#include "Player.h"
+#include "Cell.h"
 #include "Dice.h"
 
-GoCommand::GoCommand(vector <Player*> &_listPlayer, int &_idTurnPlayer)
+GameCommand::GameCommand(Game *game)
 {
-    GoCommand::_listPlayer = &_listPlayer;
-    GoCommand::_idTurnPlayer = &_idTurnPlayer;
-};
+    this->_game = game;
+    this->_listPlayer = &game->_listPlayer;
+    this->_listCell = &game->_listCell;
+}
+
+GoCommand::GoCommand(Game *game, int *_idTurnPlayer) : GameCommand(game)
+{
+    GoCommand::_idTurnPlayer = _idTurnPlayer;
+}
 
 void GoCommand::execute()
 {
-    int dice1 = Dice::Rand(1, 6);
-    int dice2 = Dice::Rand(1, 6);
-
-    (*_listPlayer)[*_idTurnPlayer]->setPosition( dice1 + dice2 ); 
+    _game->rollDice();
+    int newPos = ( (*_listPlayer)[*_idTurnPlayer]->Position() + _game->getDice() ) % 40;
+    if (newPos == 0) newPos = 40;
+    (*_listPlayer)[*_idTurnPlayer]->setPosition(newPos); 
 }
 
-PassCommand::PassCommand(int &_idTurnPlayer)
+PassCommand::PassCommand(Game *game, int *_idTurnPlayer) : GameCommand(game)
 {
-    PassCommand::_idTurnPlayer = &_idTurnPlayer;
+    PassCommand::_idTurnPlayer = _idTurnPlayer;
 }
 
 void PassCommand::execute()
 {
-    _idTurnPlayer;
+    *_idTurnPlayer = (*_idTurnPlayer == _listPlayer->size() ) ? 1 : *_idTurnPlayer + 1;  
 }
 
-BuyCommand::BuyCommand(vector <Player*> &_listPlayer, int &_idTurnPlayer)
+BuyCommand::BuyCommand(Game *game, int *_idTurnPlayer) : GameCommand(game)
 {
-    BuyCommand::_listPlayer = &_listPlayer;
-    BuyCommand::_idTurnPlayer = &_idTurnPlayer;
+    BuyCommand::_idTurnPlayer = _idTurnPlayer;
 }
 
 void BuyCommand::execute()
 {
     Player* player = (*_listPlayer)[*_idTurnPlayer];
     NormalLand *cell = dynamic_cast< NormalLand* >( (*_listCell)[ player->Position() ] );
+    int price;
 
-    player->changeMoney( cell->buyLand(player) );
+    cell->buyLand( player->ID(), price);
+    player->changeMoney( -price );
 }
 
-SellCommand::SellCommand(vector <Player*> &_listPlayer, vector <int> &_idChose)
+SellCommand::SellCommand(Game *game, vector <int> *_idChose) : GameCommand(game)
 {
-    SellCommand::_listPlayer = &_listPlayer;
-    SellCommand::_idChose = &_idChose;
+    SellCommand::_idChose = _idChose;
 }
 
 void SellCommand::execute()
@@ -51,14 +60,15 @@ void SellCommand::execute()
     int idLand = (*_idChose)[1];
     Player* player = (*_listPlayer)[idPlayer];
     NormalLand *cell = dynamic_cast< NormalLand* > ( (*_listCell)[ idLand ] );
+    int price;
 
-    player->changeMoney( cell->sellHouse() );
+    cell->sellHouse(price);
+    player->changeMoney( price );
 }
 
-Mortage::Mortage(vector <Player*> &_listPlayer, vector <int> &_idChose)
+Mortage::Mortage(Game *game, vector <int> *_idChose) : GameCommand(game)
 {
-    Mortage::_listPlayer = &_listPlayer;
-    Mortage::_idChose = &_idChose;
+    Mortage::_idChose = _idChose;
 }
 
 void Mortage::execute()
@@ -67,16 +77,15 @@ void Mortage::execute()
     int idLand = (*_idChose)[1];
     int price(0);
     Player* player = (*_listPlayer)[idPlayer];
-    NormalLand *cell = dynamic_cast< NormalLand* > ( (*_listCell)[ idLand ] );
+    RealEstate *cell = dynamic_cast< RealEstate* > ( (*_listCell)[ idLand ] );
 
-    cell->Mortgage(price);
+    cell->mortgage(price);
     player->changeMoney(price);
 }
 
-Redeem::Redeem(vector <Player*> &_listPlayer, vector <int> &_idChose)
+Redeem::Redeem(Game *game, vector <int> *_idChose) : GameCommand(game)
 {
-    Redeem::_listPlayer = &_listPlayer;
-    Redeem::_idChose = &_idChose;
+    Redeem::_idChose = _idChose;
 }
 
 void Redeem::execute()
@@ -88,10 +97,9 @@ void Redeem::execute()
     //REDEEM FUNCTION
 }
 
-Build::Build(vector <Player*> &_listPlayer, vector <int> &_idChose)
+Build::Build(Game *game, vector <int> *_idChose) : GameCommand(game)
 {
-    Build::_listPlayer = &_listPlayer;
-    Build::_idChose = &_idChose;
+    Build::_idChose = _idChose;
 }
 
 void Build::execute()
@@ -99,16 +107,9 @@ void Build::execute()
     int idPlayer = (*_idChose)[0];
     Player* player = (*_listPlayer)[idPlayer];
     NormalLand *cell = dynamic_cast< NormalLand* > ( (*_listCell)[ player->Position() ] );
+    int price;
 
-    player->changeMoney( cell->build() );
-}
-
-void ActivateCell::execute()
-{
-    //Check type of cell
-    if ("RealEastate")
-    {
-        //Do operation
-    }
+    cell->build(price);
+    player->changeMoney( -price );
 }
 

@@ -4,16 +4,20 @@
 #include <QGraphicsItem>
 #include <QPainter>
 
+class MainWindow;
+
 class CellItem : public QGraphicsItem
 {
 
 private:
+    MainWindow *mainWindow;
     QPointF leftTop;
     int height, width;
+    int idCell;
 
 public:
     CellItem();
-    CellItem( QPointF leftTop, int width, int height);
+    CellItem( QPointF leftTop, int width, int height, int idCell, MainWindow *mainWindow);
 
     QRectF boundingRect() const override
     {
@@ -36,6 +40,8 @@ public:
     {
         return width;
     }
+
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
 };
 
 #endif // CELLITEM_H
