@@ -40,14 +40,18 @@ Quỳnh Như
 Khâm:
 - code class Game và ~~Board~~. Để ý song song với cái bên UI để có thể kết nối lại hai phần với nhau.
 
-# Plan 3: 20/12/2021
-Mục tiêu: 
-Lưu ý là nhớ thay đổi thông thi cho các card Luck và Chances
-Hoàng:
-- 
+# Plan 3: 20 / 12 / 2021
+Mục tiêu: Hoàn thành phần xử lí Logic, mã nguồn. Hoàn tất việc thử nghiệm ở lớp giao diện người dùng.
+Lưu ý là nhớ thay đổi thông tin cho các card Luck và Chances.
 
-Như:
-- 
+## File Cell.h
+Định nghĩa các ô đặc biệt còn lại (hoàn thành lớp Card).
+Và phương thức thực thi activeCell.
+## File Comand.h (Hoàng)
+...
 
-Khâm:
-- 
+## File Game.h 
+Quan sát Interface Game (IGame) và thực thi các phương thức đó.
+Bên Cell cần gì thì thêm phương thức đó.
+
+## File Player.h
