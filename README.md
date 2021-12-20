@@ -44,14 +44,38 @@ Khâm:
 Mục tiêu: Hoàn thành phần xử lí Logic, mã nguồn. Hoàn tất việc thử nghiệm ở lớp giao diện người dùng.
 Lưu ý là nhớ thay đổi thông tin cho các card Luck và Chances.
 
-## File Cell.h
-Định nghĩa các ô đặc biệt còn lại (hoàn thành lớp Card).
-Và phương thức thực thi activeCell.
+## Quy ước
+* Biên dịch dưới chuẩn **C++ 17**
+
+* Các phương thức trong lớp Cell chỉ nên trả về void, các **kết quả** trả về thông qua **truyền tham chiếu** để không phải mất công nghĩ kiểu trả về cho từng hành động
+
+* Đối với các tham số truyền vào, chỉ nên **dùng truyền tham chiếu** với các kiểu của **thư viện** hoặc kiểu cần khởi tạo **"nặng"**, không cần truyền tham chiếu các biến có kiểu built-in (như int, double,...)
+
+* Nên dùng các kiểu số nguyên **có dấu** (int,...) và kiểu số thực **double**
+
+* Nên chuyển qua sử dụng các con trỏ "**an toàn**" của thư viện. Không nên trỏ cùng một đối tượng bởi nhiều con trỏ khác nhau trừ khi nó được quản lý bởi các lớp hay là một thuộc tính của lớp tham chiếu tới đối tượng khác.
+
+* **Mô tả** bằng comment các phương thức trong Interface IGame cụ thể để có thể implement trong lớp Class
+
+* Trong các file header (.h), chỉ include những gì cần phải có để file header đó **hoạt động**. Nếu trong file header chỉ có dùng kiểu con trỏ tới một class, mà chưa dùng phương thức của class đó, **không include file header của class** đó mà chỉ cần dùng forward declaration tên của class để tránh cyclic dependency.
+
+* Nên test kĩ đảm bảo chương trình có thể **compile và chạy được** trước khi đẩy mã nguồn lên github.
+
+## File Cell.h (Như)
+Định nghĩa các ô đặc biệt còn lại (Go, GoToJail,...)
+Hoàn thiện lớp Card
+Hoàn thiện các hàm activateCell của các lớp ô bàn cờ
+
 ## File Comand.h (Hoàng)
+Hoàn thiện các lớp Command đã xây dựng
+Thêm UpdateCommand (Cập nhật thông tin của GUI)
+Thêm NotifyCommand (Xuất thông tin và các lựa chọn (nếu có) để người dùng biết và lựa chọn)
+
+## File Game.h (Khâm)
+Quan sát Interface Game (IGame) và thực thi các phương thức đó. Bên Cell cần gì thì thêm phương thức đó
+
+## File Player.h (Khâm)
 ...
 
-## File Game.h 
-Quan sát Interface Game (IGame) và thực thi các phương thức đó.
-Bên Cell cần gì thì thêm phương thức đó.
-
-## File Player.h
+## Các lớp của giao diện người dùng (Hoàng)
+Thử nghiệm việc hiển thị thông tin theo filter của game, hoàn tất phân lớp các Class để mã nguồn gọn hơn
