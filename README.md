@@ -38,4 +38,16 @@ Quỳnh Như
 - chỉnh lại liên hệ của Cell và cái Factory và cái NormalLand, có thể nên thêm một cái class bất động sản (RealEstate).
 
 Khâm:
-- code class Game và Board. Để ý song song với cái bên UI để có thể kết nối lại hai phần với nhau.
+- code class Game và ~~Board~~. Để ý song song với cái bên UI để có thể kết nối lại hai phần với nhau.
+
+# Plan 3: 20/12/2021
+Mục tiêu: 
+Lưu ý là nhớ thay đổi thông thi cho các card Luck và Chances
+Hoàng:
+- 
+
+Như:
+- 
+
+Khâm:
+- 
