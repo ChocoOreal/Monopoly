@@ -58,8 +58,7 @@ int main()
 
     doCommand->doCommand(0);
     
-    //delete application;
-    delete doCommand;
+    delete application;
 
     return 0;
 }
