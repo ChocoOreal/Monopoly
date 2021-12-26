@@ -23,8 +23,9 @@ class Game : public IGame
         //This is the query or notification that game need to show for player deciding or knowing
         struct Notify
         {
-            string textNotify;
-            vector <string> listQuery;
+            string textNotify; //Information show what happened in game
+            vector <string> listQuery; //List of choices for a given textNotify
+            string ans; //Choice player have chose in the listQuery
         } _notification;
 
         void initializePlayer(int);
