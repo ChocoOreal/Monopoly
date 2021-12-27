@@ -9,6 +9,7 @@ class Player;
 class Cell;
 class GameCommand;
 class RunningGameMode;
+class CommandHandler;
 
 using std::vector; using std::cout; using std::string;
 
@@ -19,6 +20,7 @@ class Game : public IGame
         vector <Cell *> _listCell;
         int _idTurnPlayer;
         int _dice1, _dice2;
+        CommandHandler* invoker;
 
         //This is the query or notification that game need to show for player deciding or knowing
         struct Notify
@@ -38,7 +40,8 @@ class Game : public IGame
         void rollDice();
         int getDice();
         void transferMoney(int idPlayerFrom, int idPlayerTo);
-        void notify(string text, vector <string> listQuery);
+        void notify(string text, string &ans, vector <string> listQuery);
+        void movePlayer(int idPlayer, int pos);
 
         void ranking();
 

@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Cell.h"
 #include "Dice.h"
+#include "CommandHandler.h"
 
 Game::Game() 
 {
@@ -42,9 +43,22 @@ void Game::transferMoney(int idPlayerFrom, int idPlayerTo)
     
 }
 
-void Game::notify(string text, vector <string> listQuery)
+void Game::notify(string text, string &ans, vector <string> listQuery)
 {
-    
+    _notification.textNotify = text;
+    _notification.listQuery = listQuery;
+
+    invoker->doCommand(7);
+
+    ans = _notification.ans;
+}
+
+/* Di chuyen nguoi choi idPlayer toi o co id la pos
+*/
+void Game::movePlayer(int idPlayer, int amountPos)
+{
+    //tinh toan o moi va goi ham thay doi cua nguoi choi
+    //goi ham activateCell cua o moi nguoi choi vua buoc vao
 }
 
 void Game::ranking()

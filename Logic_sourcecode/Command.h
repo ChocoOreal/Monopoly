@@ -6,6 +6,7 @@
 class Player;
 class Cell;
 class Game;
+class GUI;
 
 using std::vector;
 
@@ -94,6 +95,16 @@ class Build : public GameCommand
     public:
         Build(Game *game, vector <int> *_idChose);
         void execute();
+};
+
+class NotifyCommand : public GameCommand
+{
+    private:
+        GUI *mainWindow;
+
+    public:
+        NotifyCommand(Game *game, GUI *mainWindow) : GameCommand(game) {};
+        void execute() {};
 };
 
 #endif
