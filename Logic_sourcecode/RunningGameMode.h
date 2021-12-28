@@ -20,7 +20,7 @@ class RunningGameMode
 
     public:
         RunningGameMode();
-        RunningGameMode(int numPlayer); //Infact this will be a config class contain setting used in a game
+        RunningGameMode(int numPlayer); //In fact this will be a config class contain setting used in a game
         ~RunningGameMode();
 
         CommandHandler *getCommandHandler();

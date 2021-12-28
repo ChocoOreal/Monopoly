@@ -38,7 +38,7 @@ int Game::getDice()
     return _dice1 + _dice2;
 }
 
-void Game::transferMoney(int idPlayerFrom, int idPlayerTo)
+void Game::transferMoney(int idPlayerFrom, int idPlayerTo, int amnt)
 {
     
 }
