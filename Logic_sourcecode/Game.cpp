@@ -37,7 +37,7 @@ int Game::getDice()
     return _dice1 + _dice2;
 }
 
-void Game::transferMoney(int idPlayerFrom, int idPlayerTo)
+void Game::transferMoney(int idPlayerFrom, int idPlayerTo, int moneyValue)
 {
     
 }
@@ -58,7 +58,7 @@ void Game::endGame()
     for (Player*& curPlayer: _listPlayer) 
     {
         if (curPlayer != NULL) 
-        {
+        {   
             delete curPlayer;
         }
     }

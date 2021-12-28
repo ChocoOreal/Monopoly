@@ -37,7 +37,7 @@ class Game : public IGame
 
         void rollDice();
         int getDice();
-        void transferMoney(int idPlayerFrom, int idPlayerTo);
+        void transferMoney(int idPlayerFrom, int idPlayerTo, int moneyValue);
         void notify(string text, vector <string> listQuery);
 
         void ranking();
