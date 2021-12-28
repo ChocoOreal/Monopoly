@@ -61,6 +61,11 @@ void Game::movePlayer(int idPlayer, int amountPos)
     //goi ham activateCell cua o moi nguoi choi vua buoc vao
 }
 
+void Game::changeJailedState (int idPlayer, bool& jailed)
+{
+    
+}
+
 void Game::ranking()
 {
 }

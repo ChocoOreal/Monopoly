@@ -30,7 +30,7 @@ RunningGameMode.o: RunningGameMode.cpp
 Game.o: Game.cpp
 	$(CC) $(FLAGS) Game.cpp 
 Util.o: Util.cpp
-	$(CC) $(FLAGS) Util.h
+	$(CC) $(FLAGS) Util.cpp
 
 clean:
 	rm -f $(OBJS) $(OUT)

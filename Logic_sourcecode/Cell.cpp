@@ -70,7 +70,7 @@ void RealEstate::activateCell(int idPlayer)
     {
         int price;
         this->rent(price);
-        iGame->transferMoney(idPlayer, _owner);
+        iGame->transferMoney(idPlayer, _owner, price);
     }
 }
 

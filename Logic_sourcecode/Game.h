@@ -42,6 +42,7 @@ class Game : public IGame
         void transferMoney(int idPlayerFrom, int idPlayerTo, int amnt);
         string notify(const string &text, const vector <string> &listQuery = {}, const bool waitResponde = false);
         void movePlayer(int idPlayer, int pos);
+        void changeJailedState (int idPlayer, bool& jailed);
 
         void ranking();
 
