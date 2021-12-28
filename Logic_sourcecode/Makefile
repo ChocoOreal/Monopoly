@@ -1,6 +1,6 @@
-OBJS	= Cell.o Command.o CommandHandler.o main.o Player.o RunningGameMode.o Game.o
-SOURCE	= Cell.cpp Command.cpp CommandHandler.cpp main.cpp Player.cpp RunningGameMode.cpp Game.cpp
-HEADER	= Dice.h Game.h Cell.h Command.h CommandHandler.h IGame.h Player.h RunningGameMode.h
+OBJS	= Cell.o Command.o CommandHandler.o main.o Player.o RunningGameMode.o Game.o Util.o
+SOURCE	= Cell.cpp Command.cpp CommandHandler.cpp main.cpp Player.cpp RunningGameMode.cpp Game.cpp Util.cpp
+HEADER	= Dice.h Game.h Cell.h Command.h CommandHandler.h IGame.h Player.h RunningGameMode.h Util.h
 OUT	= main
 CC	 = g++
 FLAGS	 = -g -c -Wall
