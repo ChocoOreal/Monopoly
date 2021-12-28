@@ -1,6 +1,7 @@
 #include "Cell.h"
 #include "Dice.h"
 #include "IGame.h"
+#include "Util.h"
 #include <string>
 #include <sstream>
 
@@ -30,15 +31,12 @@ Card::Card() {
     currentCard = "";
 }
 
-void Card::drawCard (string& info, int amnt, int type) {
+void Card::drawCard (string& info, int& amnt) {
 
     //@ chu tren the @ gia tri cua the (duong hoac am)\n
-    type = Dice::Rand(1, 2);
+    int type = Dice::Rand(1, 2);
     int i = Dice::Rand(1, 6);//random
-    string seperator = " @ ";
-    int startPos = 2;
-    int foundPos = 0;
-    int count = 0;
+    
     string card;
     if (type == 1) {
         card = luckyCard[i];
@@ -46,15 +44,10 @@ void Card::drawCard (string& info, int amnt, int type) {
     else {
         card = chancesCard[i];
     }
-    foundPos = card.find(seperator, startPos);
-    count = foundPos - startPos;
-    info = card.substr(startPos, count);
-    currentCard = info;
-    startPos = foundPos + seperator.size();
-    count = card.length() - startPos;
-    string amnt_temp = card.substr(startPos, count);
-    stringstream ss (amnt_temp);
+    vector <string> tokens = Util::parse(card, " @ ", 2);
+    stringstream ss (tokens[1]);
     ss >> amnt;
+    info = tokens[0];
 }
 
 /* 
@@ -118,43 +111,16 @@ void NormalLand::build(int &price) {
 }
 
 //information doc tu file luc initialize
-NormalLand::NormalLand(string information) {
+NormalLand::NormalLand(string information): RealEstate(){
     // "@ chu tren the @ gia mua dat @ gia thue @ gia nha"
-    string separator = " @ ";
-    string info;
-    string value;
-    string buy_price;
-    string rent_price;
-    string house_price;
-    int foundPos = 0;
-    int startPos = 0;
-    foundPos = information.find(separator, startPos);
-    int count = foundPos - startPos;
-    _information = information.substr(startPos, count);
-    
-    startPos = foundPos + separator.length();
-    foundPos = information.find(separator, startPos);
-    count = foundPos - startPos;
-    buy_price = information.substr(startPos, count);
-    stringstream bp (buy_price);
-    bp >> _buyPrice;
-    startPos = foundPos + separator.length();
-    foundPos = information.find(separator, startPos);
-    count = foundPos - startPos;
-    rent_price = information.substr(startPos, count);
-    stringstream rp (rent_price);
-    rp >> _rentPrice;
-    startPos = foundPos + separator.length();
-    count = information.length() - startPos;
-    house_price = information.substr(startPos, count);
-    stringstream hp (house_price);
-    hp >> _housePrice;
-    
-    _isMortgage = false;
-    _numberOfHotel = 0;
-    _numberOfHouse = 0;
-    _owner = -1;
-    _information.substr(2);
+    vector<string> tokens = Util::parse(information, " @ ", 2);
+    _information = tokens[0];
+    stringstream ss1 (tokens[1]);
+    ss1 >> _buyPrice;
+    stringstream ss2 (tokens[2]);
+    ss2 >> _rentPrice;
+    stringstream ss3 (tokens[3]);
+    ss3 >> _housePrice; 
 }
 
 /*
@@ -181,29 +147,44 @@ void Factory::rent(int &money) {
 RealEstate::RealEstate(string information) {
     //@ thong tin @ gia mua @ gia thue
     string separator = " @ ";
-    string info;
-    string value;
-    string buy_price;
-    string rent_price;
-    int foundPos = 0;
-    int startPos = 0;
-    foundPos = information.find(separator, startPos);
-    int count = foundPos - startPos;
-    _information = information.substr(startPos, count);
-    
-    startPos = foundPos + separator.length();
-    foundPos = information.find(separator, startPos);
-    count = foundPos - startPos;
-    buy_price = information.substr(startPos, count);
-    stringstream bp (buy_price);
-    bp >> _buyPrice;
-    startPos = foundPos + separator.length();
-    count = information.length() - startPos;
-    rent_price = information.substr(startPos, count);
-    stringstream rp (rent_price);
-    rp >> _rentPrice;
-    _isMortgage = false;
-    
+    vector<string> tokens = Util::parse(information, separator, 2);
+    stringstream ss1 (tokens[1]);
+    stringstream ss2 (tokens[2]);
+    ss1 >> _buyPrice;
+    ss2 >> _rentPrice;
     _owner = -1;
-    _information.substr(2);
+    _information = tokens[0];
+    _isMortgage = false;
+    _owner = -1;
+}
+
+/*
+    Go class implementation
+*/
+void Go::activateCell(int idPlayer, int& moneyAmount) {
+    moneyAmount = _startMoney;
+}
+
+
+//Sau nay phai sua cho nay
+Go::Go() {
+    _information = "Thong tin cho o bat dau";
+    _startMoney = START_MONEY_AMOUNT;
+}
+
+
+/*
+
+    PayTax class implementation
+
+*/
+
+
+PayTax::PayTax() {
+    _information = "Thong tin cua the"; //can sua sau
+    _tax = TAX;
+}
+
+void PayTax::activateCell(int idPlayer, int& moneyAmount) {
+    moneyAmount = _tax;
 }

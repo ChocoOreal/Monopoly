@@ -32,6 +32,8 @@ class IGame
         
         //Di chuyen nguoi choi co idPlayer mot so luong pos buoc
         virtual void movePlayer(int idPlayer, int pos) = 0;
+        //chuyen doi trang thai tu toi cua nguoi choi
+        virtual void changeJailedState (int idPlayer, bool& jailed) = 0; 
         
 };
 
