@@ -29,7 +29,8 @@ RunningGameMode.o: RunningGameMode.cpp
 
 Game.o: Game.cpp
 	$(CC) $(FLAGS) Game.cpp 
-Util.o: Utill.cpp
+
+Util.o: Util.cpp
 	$(CC) $(FLAGS) Util.h
 
 clean:

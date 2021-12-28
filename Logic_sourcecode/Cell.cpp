@@ -70,7 +70,7 @@ void RealEstate::activateCell(int idPlayer)
     {
         int price;
         this->rent(price);
-        iGame->transferMoney(idPlayer, _owner);
+        iGame->transferMoney(idPlayer, _owner, price);
     }
 }
 
@@ -130,7 +130,7 @@ NormalLand::NormalLand(string information): RealEstate(){
 */
 
 void Railroad::rent(int &money) {
-    money = _rentPrice * (int)pow(2, playerOwnerNum[_owner] - 1);
+    money = _rentPrice * (1<<(playerOwnerNum[_owner] - 1));
 }
 
 /*
