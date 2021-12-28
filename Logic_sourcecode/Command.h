@@ -107,4 +107,14 @@ class NotifyCommand : public GameCommand
         void execute() {};
 };
 
+class Update : public GameCommand
+{
+    private:
+        GUI *mainWindow;
+
+    public:
+        Update(Game *game, GUI *mainWindow);
+        void execute() {};
+};
+
 #endif

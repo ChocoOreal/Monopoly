@@ -40,7 +40,7 @@ class Game : public IGame
         void rollDice();
         int getDice();
         void transferMoney(int idPlayerFrom, int idPlayerTo);
-        void notify(string text, string &ans, vector <string> listQuery);
+        string notify(const string &text, const vector <string> &listQuery = {}, const bool waitResponde = false);
         void movePlayer(int idPlayer, int pos);
 
         void ranking();

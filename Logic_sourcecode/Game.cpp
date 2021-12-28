@@ -43,14 +43,14 @@ void Game::transferMoney(int idPlayerFrom, int idPlayerTo)
     
 }
 
-void Game::notify(string text, string &ans, vector <string> listQuery)
+string Game::notify(const string &text, const vector <string> &listQuery, const bool waitResponde)
 {
     _notification.textNotify = text;
     _notification.listQuery = listQuery;
 
     invoker->doCommand(7);
 
-    ans = _notification.ans;
+    return _notification.ans;
 }
 
 /* Di chuyen nguoi choi idPlayer toi o co id la pos

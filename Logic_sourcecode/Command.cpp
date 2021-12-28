@@ -112,4 +112,3 @@ void Build::execute()
     cell->build(price);
     player->changeMoney( -price );
 }
-
