@@ -4,12 +4,13 @@
 #include <sstream>
 
 class IGame;
-
+class Util;
 using std::string;
 
 #define COEFFICIENT 1.2
 #define HOTELCOEFFICIENT 1.5
-
+#define START_MONEY_AMOUNT 200
+#define TAX 200
 class Cell {
 
     public:
@@ -30,7 +31,7 @@ class Card: public Cell {
     public:
         Card();
 
-        void drawCard (string& info, int amnt, int type);
+        void drawCard (string& info, int& amnt);
 
         string toString() { return currentCard; }
         void activateCell(int idPlayer) {};
@@ -82,7 +83,8 @@ class NormalLand: public RealEstate {
         ~NormalLand() {}
 };
 
-class Factory: public RealEstate {
+class Factory : public RealEstate
+{
 
     private:
         bool isSameOwner = false;
@@ -106,7 +108,34 @@ class Railroad: public RealEstate {
         void rent(int &money);
 };
 
-class Go : public Cell {};
-class PayTax : public Cell {};
-class GoToJail : public Cell {};
-class JailCell : public Cell {};
+class Go : public Cell {
+    private:
+        string _information;
+        int _startMoney;
+    public:
+        Go();
+        string toString() {return _information;}
+        void activateCell(int idPlayer, int& moneyAmount);
+};
+class PayTax : public Cell {
+    private:
+        string _information;
+        int _tax;
+    public:
+        PayTax();
+        string toString () {return _information;}
+        void activateCell (int idPlayer, int& moneyAmount);
+        
+} ;
+class GoToJail : public Cell {
+    private:
+        string _information;
+        
+    public:
+        GoToJail();
+        string toString () {return _information;}
+        void activateCell (int idPlayer, bool& jailed) {jailed = true;};
+};
+class JailCell : public Cell {
+    
+};
