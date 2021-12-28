@@ -23,6 +23,7 @@ RunningGameMode::RunningGameMode(int numPlayer)
     invoker->addFixedCommand( new SellCommand(game, &mainWindow->listIdChose) );
     invoker->addFixedCommand( new Mortage(game, &mainWindow->listIdChose) );
     invoker->addFixedCommand( new Redeem(game, &mainWindow->listIdChose) );
+    invoker->addFixedCommand( new NotifyCommand(game, mainWindow) );
 }
 
 RunningGameMode::~RunningGameMode()
