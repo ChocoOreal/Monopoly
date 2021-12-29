@@ -79,3 +79,23 @@ Quan sát Interface Game (IGame) và thực thi các phương thức đó. Bên 
 
 ## Các lớp của giao diện người dùng (Hoàng)
 Thử nghiệm việc hiển thị thông tin theo filter của game, hoàn tất phân lớp các Class để mã nguồn gọn hơn
+
+# Plan 4: 27/12/2021
+Mục tiêu: hoàn chỉnh bộ cơ sở dữ liệu của trò chơi (dữ liệu thẻ, ô bàn cờ); hoàn chỉnh file config
+
+## Hợp nhất GUI và mã nguồn Logic: 28/12/2021 -> hết ngày 29/12/2021
+Không pull/push gì thêm, không cần phải chỉnh sửa gì trong mã nguồn vào giai đoạn này
+
+## File Config
+* Chỉnh số nhà tối đa trong trò chơi được xây
+* Chỉnh số khách sạn tối đa trong trò chơi được xây
+* Người chơi có phải chỉ được xây nhà vào lượt của mình và tại ô mình đang đứng hay không
+
+## Hàm lấy dữ liệu xuất ra GUI
+* getData() -> vector <string> {Loại, Tên, Giá mua ô bàn cờ đó, Giá thuê gốc (chưa có công trình ở trên), }
+* Dữ liệu người chơI: getDate() -> vector <string> {Nickname, ID_hình ảnh token, Số thứ tự lượt đi, Tiền mặt hiện có, Có đang trong tù không, Có giữ thẻ ra tù không}
+
+# Deadline: 14/1/2022
+
+
+
