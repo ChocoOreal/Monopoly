@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/image">
+        <file>Image/Asset 1.png</file>
+        <file>Image/Info.png</file>
+        <file>Image/Home.png</file>
+        <file>Image/Setting.png</file>
+        <file>Image/Board.png</file>
+        <file>Image/Artboard 5.png</file>
+        <file>Image/Coin_background.png</file>
+        <file>Image/Wood_background.png</file>
+    </qresource>
+</RCC>
