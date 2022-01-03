@@ -2,8 +2,11 @@
 
 #include <string>
 #include <sstream>
+#include <vector>
 
-using std::string;
+using std::string; using std::vector;
+
+class IGame;
 
 class Player
 {
@@ -11,6 +14,9 @@ class Player
         static int InstanceCount;
 
     private:
+        //Access the interface of game
+        IGame* _igame;
+
         // Player current money (should be float number)
         float _money;
 
@@ -80,7 +86,7 @@ class Player
         Player();
 
         // Init the Player class with giving information (money, jailedState, position, name, avatar)
-        Player(int, bool, int, string, string);
+        Player(IGame*, const string& name = "", const string& avatar = "");
 
         // Deconstruct the Player class
         ~Player();

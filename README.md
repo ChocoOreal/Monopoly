@@ -53,8 +53,6 @@ Lưu ý là nhớ thay đổi thông tin cho các card Luck và Chances.
 
 * Nên dùng các kiểu số nguyên **có dấu** (int,...) và kiểu số thực **double**
 
-* Nên chuyển qua sử dụng các con trỏ "**an toàn**" của thư viện. Không nên trỏ cùng một đối tượng bởi nhiều con trỏ khác nhau trừ khi nó được quản lý bởi các lớp hay là một thuộc tính của lớp tham chiếu tới đối tượng khác.
-
 * **Mô tả** bằng comment các phương thức trong Interface IGame cụ thể để có thể implement trong lớp Class
 
 * Trong các file header (.h), chỉ include những gì cần phải có để file header đó **hoạt động**. Nếu trong file header chỉ có dùng kiểu con trỏ tới một class, mà chưa dùng phương thức của class đó, **không include file header của class** đó mà chỉ cần dùng forward declaration tên của class để tránh cyclic dependency.
@@ -86,7 +84,7 @@ Mục tiêu: hoàn chỉnh bộ cơ sở dữ liệu của trò chơi (dữ li�
 ## Hợp nhất GUI và mã nguồn Logic: 28/12/2021 -> hết ngày 29/12/2021
 Không pull/push gì thêm, không cần phải chỉnh sửa gì trong mã nguồn vào giai đoạn này
 
-## File Config
+## File Config (Postponed)
 * Chỉnh số nhà tối đa trong trò chơi được xây
 * Chỉnh số khách sạn tối đa trong trò chơi được xây
 * Người chơi có phải chỉ được xây nhà vào lượt của mình và tại ô mình đang đứng hay không
@@ -96,6 +94,21 @@ Không pull/push gì thêm, không cần phải chỉnh sửa gì trong mã ngu�
 * Dữ liệu người chơI: getDate() -> vector <string> {Nickname, ID_hình ảnh token, Số thứ tự lượt đi, Tiền mặt hiện có, Có đang trong tù không, Có giữ thẻ ra tù không}
 
 # Deadline: 14/1/2022
+
+# Plan 5: 
+
+* Theo dõi định dạng các file dữ liệu trong file Document/metadata format.md
+* Chỉnh sửa trong folder Logic_sourcecode cần copy lại qua Comporated_sourcecode trước khi đẩy lên
+
+* Tạo file chứa dữ liệu Cell (Như) và chỉnh constructor của Cell trả về ID của nó
+* Khởi tạo danh sách các Cell (đọc từ file dữ liệu trên) và danh sách Player cho lớp Game (Khâm)
+* Gọi hàm notifyChange trong các lớp Cell và Player khi thuộc tính của chúng thay đổi
+* Những phần còn lại (Hoàng)
+
+
+
+
+
 
 
 

@@ -2,11 +2,12 @@
 #define COMMAND_H
 
 #include <vector>
+#include <string>
 
 class Player;
 class Cell;
 class Game;
-class GUI;
+class MainWindow;
 
 using std::vector;
 
@@ -100,21 +101,21 @@ class Build : public GameCommand
 class NotifyCommand : public GameCommand
 {
     private:
-        GUI *mainWindow;
+        MainWindow *mainWindow;
 
     public:
-        NotifyCommand(Game *game, GUI *mainWindow) : GameCommand(game) {};
+        NotifyCommand(Game *game, MainWindow *mainWindow) : GameCommand(game) {};
         void execute() {};
 };
 
 class Update : public GameCommand
 {
     private:
-        GUI *mainWindow;
+        MainWindow *mainWindow;
 
     public:
-        Update(Game *game, GUI *mainWindow);
-        void execute() {};
+        Update(Game *game, MainWindow *mainWindow);
+        void execute();
 };
 
 #endif

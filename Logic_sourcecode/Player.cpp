@@ -1,14 +1,16 @@
 #include "Player.h"
+#include "IGame.h"
 #include <iostream>
 
 using std::string; using std::to_string;
 
 // Player Initializer with given _money, _jailed state, _position, _name and _avatar
-Player::Player(int newMoney, bool newJailed, int newPosition, string newName, string newAvatar)
+Player::Player(IGame* igame, const string &newName, const string &newAvatar)
 {
-    _money = newMoney;
-    _jailed = newJailed;
-    _position = newPosition;
+    _igame = igame;
+    _money = 2000;
+    _jailed = false;
+    _position = 1;
     _name = newName;
     _avatar = newAvatar;
     _id = Player::InstanceCount;
@@ -18,6 +20,7 @@ Player::Player(int newMoney, bool newJailed, int newPosition, string newName, st
 // Player Initializer.
 Player::Player()
 {
+    _igame = nullptr;
     _money = 2000;
     _jailed = false;
     _position = 1;
@@ -70,6 +73,7 @@ void Player::changeMoney(const float &value)
 void Player::setPosition(const int &pos)
 {
     _position = pos;
+    _igame->notifyChange("player", this->_id);
 }
 
 // setter methods

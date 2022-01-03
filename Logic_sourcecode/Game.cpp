@@ -23,7 +23,7 @@ void Game::initializePlayer(int numberOfPlayer)
     
     for (Player *&curPlayer : _listPlayer)
     {
-        curPlayer = new Player;
+        curPlayer = new Player (this);
     }
 }
 
@@ -31,11 +31,14 @@ void Game::rollDice()
 {
     _dice1 = Dice::Rand(1, 6);
     _dice2 = Dice::Rand(1, 6);
+
+    notifyChange("dice");
 }
 
-int Game::getDice()
+void Game::getDice(int &dice1, int &dice2)
 {
-    return _dice1 + _dice2;
+    dice1 = _dice1;
+    dice2 = _dice2;
 }
 
 void Game::transferMoney(int idPlayerFrom, int idPlayerTo, int amnt)
@@ -64,6 +67,19 @@ void Game::movePlayer(int idPlayer, int amountPos)
 void Game::changeJailedState (int idPlayer, bool& jailed)
 {
     
+}
+
+void Game::notifyChange(const string &type, int id)
+{
+    _typeUpdate = type;
+    _idUpdate = id;
+    invoker->doCommand(3);
+}
+
+void Game::getNotifyChange(string &type, int &id)
+{
+    type = _typeUpdate;
+    id = _idUpdate;
 }
 
 void Game::ranking()
