@@ -36,7 +36,7 @@ void Card::drawCard (string& info, int& amnt) {
     //@ chu tren the @ gia tri cua the (duong hoac am)\n
     int type = Dice::Rand(1, 2);
     int i = Dice::Rand(1, 6);//random
-    
+
     string card;
     if (type == 1) {
         card = luckyCard[i];
