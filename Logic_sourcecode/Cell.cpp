@@ -141,7 +141,9 @@ void Railroad::rent(int &money) {
 
 //this is the true rent price, not real rent price (does not include value of dice in resulting value)
 void Factory::rent(int &money) {
-    if (isSameOwner) money = 10 * iGame->getDice() ; else money = 4 * iGame->getDice(); //FUNCTION GET DICE OF GAME CLASS
+    int dice1, dice2;
+    iGame->getDice(dice1, dice2);
+    if (isSameOwner) money = 10 * (dice1 + dice2) ; else money = 4 * (dice1 + dice2); //FUNCTION GET DICE OF GAME CLASS
 }
 
 RealEstate::RealEstate(string information) {

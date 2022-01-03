@@ -6,15 +6,14 @@
 using std::vector;
 
 //This class is just simulated for Graphical User Interface in coding and testing process. This will be replaced by the real class of GUI when it's appropriate
-class GUI;
-
+class MainWindow;
 class CommandHandler;
 class Game;
 
 class RunningGameMode
 {
     private:
-        GUI *mainWindow;
+        MainWindow *mainWindow;
         CommandHandler *invoker;
         Game *game;
 

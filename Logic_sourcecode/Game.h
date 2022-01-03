@@ -22,6 +22,8 @@ class Game : public IGame
         int _dice1, _dice2;
         CommandHandler* invoker;
 
+        string _typeUpdate; int _idUpdate;
+
         //This is the query or notification that game need to show for player deciding or knowing
         struct Notify
         {
@@ -38,11 +40,13 @@ class Game : public IGame
         Game(int);
 
         void rollDice();
-        int getDice();
+        void getDice(int &dice1, int &dice2);
         void transferMoney(int idPlayerFrom, int idPlayerTo, int amnt);
         string notify(const string &text, const vector <string> &listQuery = {}, const bool waitResponde = false);
         void movePlayer(int idPlayer, int pos);
         void changeJailedState (int idPlayer, bool& jailed);
+        void notifyChange(const string &type, int id = 0);
+        void getNotifyChange(string &type, int &id);
 
         void ranking();
 

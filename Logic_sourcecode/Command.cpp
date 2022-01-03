@@ -3,6 +3,8 @@
 #include "Player.h"
 #include "Cell.h"
 #include "Dice.h"
+//#include "mainwindow.h"
+#include "Util.h"
 
 GameCommand::GameCommand(Game *game)
 {
@@ -18,8 +20,11 @@ GoCommand::GoCommand(Game *game, int *_idTurnPlayer) : GameCommand(game)
 
 void GoCommand::execute()
 {
+    int dice1, dice2;
+
     _game->rollDice();
-    int newPos = ( (*_listPlayer)[*_idTurnPlayer]->Position() + _game->getDice() ) % 40;
+    _game->getDice(dice1, dice2);
+    int newPos = ( (*_listPlayer)[*_idTurnPlayer]->Position() + dice1 + dice2 ) % 40;
     if (newPos == 0) newPos = 40;
     (*_listPlayer)[*_idTurnPlayer]->setPosition(newPos); 
 }
@@ -31,7 +36,7 @@ PassCommand::PassCommand(Game *game, int *_idTurnPlayer) : GameCommand(game)
 
 void PassCommand::execute()
 {
-    *_idTurnPlayer = (*_idTurnPlayer == _listPlayer->size() ) ? 1 : *_idTurnPlayer + 1;  
+    *_idTurnPlayer = (*_idTurnPlayer + 1) % Player::InstanceCount;
 }
 
 BuyCommand::BuyCommand(Game *game, int *_idTurnPlayer) : GameCommand(game)
@@ -111,4 +116,31 @@ void Build::execute()
 
     cell->build(price);
     player->changeMoney( -price );
+}
+
+Update::Update(Game *game, MainWindow *mainWindow) : GameCommand(game)
+{
+    this->mainWindow = mainWindow;
+}
+
+void Update::execute()
+{
+    string typeUpdate;
+    int idUpdate;
+    _game->getNotifyChange(typeUpdate, idUpdate);
+
+    //Update the dice result
+    if (typeUpdate == "dice")
+    {
+        int dice1, dice2;
+
+        _game->getDice(dice1, dice2);
+        //mainWindow->updateDiceData(dice1, 0);
+        //mainWindow->updateDiceData(dice2, 1);
+    }
+    else if (typeUpdate == "player")
+    {
+        string tmpString = (*_listPlayer)[idUpdate]->toString();
+        //mainWindow->updatePlayer(idUpdate, Util::parse(tmpString,"_", 0) );
+    }
 }
