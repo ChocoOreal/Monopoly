@@ -20,45 +20,24 @@ int main(){
 }*/
 
 int Player::InstanceCount = 0;
-int Railroad::playerOwnerNum[4] = {2, 3, 4, 5};
+int Railroad::playerOwnerNum[4] = {0};
 
-/*
-int main () {
-    int ID = 1;
-    Player A(1000, false, 3, "Player A", "");
-    A.setID(ID);
-    cout << A.toString() << '\n';
 
-    getchar();
-
-    Card c;
-    string info;
-    int amount;
-    int type;
-    c.drawCard(info, amount, type);
-    cout << info << '\n';
-
-    getchar();
-
-    Factory ft("Nha may dien @ 300 @ 200");
-
-    getchar();
-
-    if (type == 1) A.changeMoney(amount); else A.setPosition( A.Position() + amount );
-    cout << A.toString() << '\n';
-}
-*/
 
 int main()
 {
-    RunningGameMode *application = new RunningGameMode(4);  
-    CommandHandler *doCommand = application->getCommandHandler();
+    // RunningGameMode *application = new RunningGameMode(4);  
+    // CommandHandler *doCommand = application->getCommandHandler();
 
-    //All the command from 2 to 6 can not be used since the list of cells is not initialised
+    // //All the command from 2 to 6 can not be used since the list of cells is not initialised
 
-    doCommand->doCommand(0);
+    // doCommand->doCommand(0);
     
-    delete application;
+    // delete application;
 
-    return 0;
+    // return 0;
+
+    Railroad r ("3 @ normalland @ land @ this is a land for building house and hotel @ 5000 @ 1000 @ 1.8 @ 300 @ 230");
+    int p;
+    r.buyLand(3, p);
 }
