@@ -68,12 +68,13 @@ bool Player::isInJail()
 void Player::changeMoney(const float &value)
 {
     _money += value;
+    _igame->notifyChange("player", _id);
 }
 
 void Player::setPosition(const int &pos)
 {
     _position = pos;
-    _igame->notifyChange("player", this->_id);
+    _igame->notifyChange("player", _id);
 }
 
 // setter methods
@@ -102,5 +103,6 @@ void Player::setAvatar(string &newAvatar)
 
 string Player::toString()
 {
-    return to_string(_id) + '_' + to_string(_money) + '_' + to_string(_position) + '_' + _name + '_';
+    return to_string(_id) + '_' + _name + '_' + to_string(_position) + '_' + _avatar + '_' + to_string(_money) + '_' +
+            (_jailed ? "true" : "false");
 }

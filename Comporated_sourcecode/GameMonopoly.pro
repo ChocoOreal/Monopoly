@@ -21,7 +21,6 @@ SOURCES += \
     mainScene.cpp \
     mainwindow.cpp \
     mymodelview.cpp \
-    mysortfilterproxymodel.cpp \
     propertymanager.cpp \
     qmybutton.cpp
 
@@ -39,7 +38,6 @@ HEADERS += \
     mainScene.h \
     mainwindow.h \
     mymodelview.h \
-    mysortfilterproxymodel.h \
     propertymanager.h \
     qmybutton.h
 

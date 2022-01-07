@@ -29,8 +29,10 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
 
+    void updateCell(int idCell, vector <string> info);
     void updatePlayer(int idPlayer, vector <string> info);
     void updateDiceData(int number, int idDice);
+    void updateInforBetweenWindow(int id); //Call this function to notify the id of elements have chosen between windows
 
     void showCellInfo(int idCell);
     string showMessageBox(const string &text, const vector <string> &listQuery = {}, const bool waitResponde = false);
@@ -45,6 +47,7 @@ private:
     CommandHandler *invoker = nullptr;
     MainScene *scene = nullptr;
     myModelView *gameModel = nullptr;
+    vector <int> idChose;
 
     int posPiece = 1;
 
@@ -53,6 +56,7 @@ public:
 
 private slots:
     void on_buttonGo_clicked();
+    void on_buttonBuy_clicked();
     void on_manageButton_clicked();
 };
 #endif // MAINWINDOW_H

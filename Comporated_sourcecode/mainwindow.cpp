@@ -17,7 +17,15 @@ MainWindow::MainWindow(QWidget *parent)
     scene->setupMainScene();
 
     gameModel = new myModelView();
-    gameModel->attachViewWithModel(ui->tableCellInfo, 1);
+    gameModel->attachViewWithModel(ui->tableCellInfo, 2);
+    gameModel->attachViewWithModel(ui->listPlayer, 3);
+    ui->listPlayer->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->listPlayer->setSelectionMode(QAbstractItemView::SingleSelection);
+}
+
+void MainWindow::updateCell(int idCell, vector<string> info)
+{
+    gameModel->updateCellData(idCell, info);
 }
 
 void MainWindow::updateDiceData(int number, int idDice)
@@ -27,7 +35,14 @@ void MainWindow::updateDiceData(int number, int idDice)
 
 void MainWindow::updatePlayer(int idPlayer, vector<string> info)
 {
+    gameModel->updatePlayerData(idPlayer, info);
     scene->setPiece(scene->piece, std::stoi(info[2]) );
+    ui->listPlayer->setCurrentIndex( ui->listPlayer->model()->index(idPlayer - 1, 0) );
+}
+
+void MainWindow::updateInforBetweenWindow(int id)
+{
+    idChose.push_back(id);
 }
 
 void MainWindow::showCellInfo(int idCell)
@@ -98,9 +113,21 @@ void MainWindow::on_buttonGo_clicked()
     showMessageBox("You have go", {});
 }
 
+void MainWindow::on_buttonBuy_clicked()
+{
+    invoker->doCommand(2);
+}
+
 void MainWindow::on_manageButton_clicked()
 {
-    PropertyManager *propertyManager = new PropertyManager (this, invoker, scene, gameModel);
+    QModelIndexList model = ui->listPlayer->selectionModel()->selectedRows(0);
+    QModelIndex modelIndexSelected = model.back();
+    int idPlayerSelect = modelIndexSelected.data().toInt();
+
+    idChose.clear();
+    idChose.push_back( idPlayerSelect );
+
+    PropertyManager *propertyManager = new PropertyManager (this, invoker, scene, gameModel, gameModel->getNameOfIdPlayer(idPlayerSelect));
     propertyManager->setWindowModality(Qt::ApplicationModal);
     propertyManager->setAttribute(Qt::WA_DeleteOnClose);
     propertyManager->show();

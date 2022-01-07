@@ -20,22 +20,26 @@ RunningGameMode::RunningGameMode(int numPlayer)
     invoker->addFixedCommand( new GoCommand(game, &game->_idTurnPlayer) );
     invoker->addFixedCommand( new PassCommand(game, &game->_idTurnPlayer) );
     invoker->addFixedCommand( new BuyCommand(game, &game->_idTurnPlayer) );
-    //invoker->addFixedCommand( new Build(game, &mainWindow->listIdChose) );
-    //invoker->addFixedCommand( new SellCommand(game, &mainWindow->listIdChose) );
-    //invoker->addFixedCommand( new Mortage(game, &mainWindow->listIdChose) );
-    //invoker->addFixedCommand( new Redeem(game, &mainWindow->listIdChose) );
-    //invoker->addFixedCommand( new NotifyCommand(game, mainWindow) );
+    invoker->addFixedCommand( new Build(game, &mainWindow->idChose) );
+    invoker->addFixedCommand( new SellCommand(game, &mainWindow->idChose) );
+    invoker->addFixedCommand( new Mortage(game, &mainWindow->idChose) );
+    invoker->addFixedCommand( new Redeem(game, &mainWindow->idChose) );
+    invoker->addFixedCommand( new NotifyCommand(game, mainWindow) );
     invoker->addFixedCommand(new Update(game, mainWindow) );
 
     game->invoker = invoker;
     mainWindow->invoker = invoker;
+
+    game->notifyChange("cell", 17);
+    game->notifyChange("cell", 16);
+    game->notifyChange("player", 1);
 
     mainWindow->show();
 }
 
 RunningGameMode::~RunningGameMode()
 {
-    //delete mainWindow;
+    delete mainWindow;
     delete invoker;
     delete game;
 }
