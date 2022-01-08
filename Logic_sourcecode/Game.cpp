@@ -78,7 +78,9 @@ string Game::notify(const string &text, const vector <string> &listQuery, const 
 */
 void Game::movePlayer(int idPlayer, int amountPos)
 {
-    _listPlayer[idPlayer]->setPosition((_listPlayer[idPlayer]->Position() + amountPos)%40);
+    int temp = (_listPlayer[idPlayer]->Position() - 1 + amountPos) % 40;
+    ++temp;
+    _listPlayer[idPlayer]->setPosition(temp);
     notifyChange("player", idPlayer);
 }
 
