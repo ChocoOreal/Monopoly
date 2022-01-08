@@ -6,6 +6,8 @@
 //#include "mainwindow.h"
 #include "Util.h"
 
+/* In this file, the mainwindow.h and all relevant class must be eleminated for running in VSCode*/
+
 GameCommand::GameCommand(Game *game)
 {
     this->_game = game;
@@ -110,8 +112,9 @@ Build::Build(Game *game, vector <int> *_idChose) : GameCommand(game)
 void Build::execute()
 {
     int idPlayer = (*_idChose)[0];
+    int idLand = (*_idChose)[1];
     Player* player = (*_listPlayer)[idPlayer];
-    NormalLand *cell = dynamic_cast< NormalLand* > ( (*_listCell)[ player->Position() ] );
+    NormalLand *cell = dynamic_cast< NormalLand* > ( (*_listCell)[idLand] );
     int price;
 
     cell->build(price);
@@ -142,5 +145,9 @@ void Update::execute()
     {
         string tmpString = (*_listPlayer)[idUpdate]->toString();
         //mainWindow->updatePlayer(idUpdate, Util::parse(tmpString,"_", 0) );
+    }
+    else
+    {
+        //mainWindow->updateCell(idUpdate, (*_listCell)[idUpdate]->toString());
     }
 }

@@ -14,6 +14,11 @@ Game::Game(int number)
 {
     _idTurnPlayer = number - 1;
     initializePlayer(number);
+
+    Cell::setInterfaceGame(this);
+    _listCell.resize(45);
+    _listCell[16] = new NormalLand("16 @ normalland @ Hi @ Hi @ 0 @ 0 @ 0 @ 0 @ 0");
+    _listCell[17] = new NormalLand("17 @ normalland @ Hi @ Hi @ 1000 @ 200 @ 2 @ 200 @ 100");
 }
 
 void Game::initializePlayer(int numberOfPlayer)
@@ -23,7 +28,7 @@ void Game::initializePlayer(int numberOfPlayer)
     
     for (Player *&curPlayer : _listPlayer)
     {
-        curPlayer = new Player (this);
+        curPlayer = new Player (this, "Hoang");
     }
 }
 
@@ -43,8 +48,8 @@ void Game::getDice(int &dice1, int &dice2)
 
 void Game::transferMoney(int idPlayerFrom, int idPlayerTo, int amount)
 {
-    _listPlayer[idPlayerFrom]->changeMoney(-amount);
-    _listPlayer[idPlayerTo]->changeMoney(amount);
+    if (idPlayerFrom != 0) _listPlayer[idPlayerFrom]->changeMoney(-amount);
+    if (idPlayerTo != 0) _listPlayer[idPlayerTo]->changeMoney(amount);
 }
 
 string Game::notify(const string &text, const vector <string> &listQuery, const bool waitResponde)
@@ -52,7 +57,7 @@ string Game::notify(const string &text, const vector <string> &listQuery, const 
     _notification.textNotify = text;
     _notification.listQuery = listQuery;
 
-    invoker->doCommand(7);
+    //invoker->doCommand(7);
 
     return _notification.ans;
 }
@@ -77,17 +82,13 @@ void Game::notifyChange(const string &type, int id)
 {
     _typeUpdate = type;
     _idUpdate = id;
-    invoker->doCommand(3);
+    //invoker->doCommand(8);
 }
 
 void Game::getNotifyChange(string &type, int &id)
 {
     type = _typeUpdate;
     id = _idUpdate;
-}
-
-void Game::ranking()
-{
 }
 
 void Game::endGame()

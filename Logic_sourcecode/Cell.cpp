@@ -7,8 +7,9 @@
 
 using std::string; using std::stringstream;
 
+IGame* Cell::iGame = nullptr;
+
 Cell::Cell (string infomation) {
-            
     _rawInfo = Util::parse(infomation, " @ ", 0);
     ID = std::stoi (_rawInfo[0]);
     _typeName = _rawInfo[1];
@@ -64,6 +65,8 @@ void Card::activateCell(int idPlayer) {
     iGame -> notifyChange("player", idPlayer);
 }
 
+vector<string> Card::toString() {}
+
 /* 
     RealEstate implement
 */
@@ -102,14 +105,12 @@ void RealEstate::activateCell(int idPlayer)
 void RealEstate::mortgage(int &money) {
     _isMortgage = true;
     money = _mortgagePrice;
-    iGame -> notifyChange("player", _owner);
     iGame -> notifyChange("cell", ID);
 }
 
 void RealEstate::buyLand(int idPlayer, int &price) {
     _owner = idPlayer;
     price = _buyPrice;
-    iGame -> notifyChange("player",idPlayer);
     iGame -> notifyChange("cell", ID);
 }
 
@@ -139,7 +140,6 @@ void NormalLand::sellHouse(int &money) {
     _numberOfHouse--;
     _rentPrice /= _COEFFICIENT;
     money = _buyPrice / 2;
-    iGame -> notifyChange("player", _owner);
     iGame -> notifyChange("cell", ID);
 }
 
@@ -157,7 +157,6 @@ void NormalLand::build(int &price) {
     
     price = _housePrice;
     iGame -> notifyChange("cell", ID);
-    iGame -> notifyChange("player", _owner);
 }
 
 //information doc tu file luc initialize
@@ -198,7 +197,6 @@ void Railroad::rent(int &money) {
     money = _rentPrice * (int)pow(2, playerOwnerNum[_owner] - 1);
     _rentPrice = money;
     iGame -> notifyChange("cell", ID);
-    iGame -> notifyChange("player", _owner);
 }
 
 void Railroad::buyLand (int idPlayer, int& price) {
@@ -206,7 +204,6 @@ void Railroad::buyLand (int idPlayer, int& price) {
     price = _buyPrice;
     playerOwnerNum[idPlayer]++;
     iGame -> notifyChange("player", idPlayer);
-    iGame -> notifyChange("cell", ID);
 }
 
 /*
@@ -223,7 +220,6 @@ void Factory::rent(int &money) {
     if (isSameOwner) money = 10 * (dice1 + dice2) ; else money = 4 * (dice1 + dice2); //FUNCTION GET DICE OF GAME CLASS
     _rentPrice = money;
     iGame -> notifyChange("cell", ID);
-    iGame -> notifyChange("player", _owner);
 }
 
 
@@ -233,7 +229,6 @@ void Factory::rent(int &money) {
 */
 void Go::activateCell(int idPlayer) {
     iGame -> transferMoney(0, idPlayer, START_MONEY_AMOUNT);
-    iGame -> notifyChange("player", idPlayer);
 }
 
 vector<string> Go::toString() {
@@ -263,7 +258,6 @@ vector<string> Go::toString() {
 
 void PayTax::activateCell(int idPlayer) {
     iGame -> transferMoney(idPlayer, 0, TAX);
-    iGame -> notifyChange("player", idPlayer);
 }
 
 vector <string>PayTax::toString() {
@@ -294,8 +288,7 @@ vector <string>PayTax::toString() {
 void GoToJail::activateCell(int idPlayer) {
     bool state = true;
     iGame -> changeJailedState(idPlayer, state);
-    iGame -> movePlayer(idPlayer, 10 - ID);
-    iGame -> notifyChange("player", idPlayer);
+    iGame -> movePlayer(idPlayer, (40 - (ID - 10)) % 40);
 }
 
 vector<string> GoToJail::toString() {

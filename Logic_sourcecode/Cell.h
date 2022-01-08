@@ -4,8 +4,10 @@
 #include <sstream>
 #include <vector>
 #include <iostream>
+
 class IGame;
 class Util;
+
 using std::string;
 using std::vector;
 
@@ -13,19 +15,27 @@ using std::vector;
 #define HOTELCOEFFICIENT 1.5
 #define START_MONEY_AMOUNT 200
 #define TAX 200
+
 class Cell {
+
     protected:
-        IGame *iGame;
+        static IGame *iGame; //This is the property which is used by all other Cell objects
         string _typeName;
         int ID;
         string _name;
         string _description;
         vector<string> _rawInfo;
+
     public:
         Cell(){}
         Cell (string infomation) ;
+
+        static void setInterfaceGame(IGame* iGame) { Cell::iGame = iGame; } //Set interface for Cell later
+        int getID() { return ID; } //Need ID of cell since we need assign Cell pointer to right position in _listCell vector
+
         virtual vector<string> toString() = 0;
         virtual void activateCell(int idPlayer) = 0;
+
         virtual ~Cell() {};
 };
 
@@ -43,6 +53,7 @@ class Card: public Cell {
 
         void activateCell(int idPlayer);
         vector <string> toString();
+
         ~Card() {}
 };
 
@@ -54,12 +65,12 @@ class RealEstate: public Cell {
         bool _isMortgage;
         short _owner;
         int _mortgagePrice;
+
     public:
         RealEstate();
         RealEstate(string information);
 
         void mortgage(int &money);
-        vector<string> toString();
         void activateCell(int idPlayer);
         virtual void buyLand(int idPlayer, int &price);
 
@@ -74,6 +85,7 @@ class RealEstate: public Cell {
         //if the cell doesnt have a certain attribute, that lacking attribute will be stored as " " (space character)
         //attribute which has boolean type will be saved as a string of "true" or "false"
         virtual vector<string> toString();
+
         ~RealEstate() {}
 };
 
@@ -106,6 +118,7 @@ class Factory : public RealEstate
     public:
         Factory() : RealEstate() {};
         Factory(string information) : RealEstate(information) {};
+
         void rent(int &money);
 };
 
@@ -117,42 +130,43 @@ class Railroad: public RealEstate {
     public:
         Railroad() : RealEstate() {};
         Railroad(string information) : RealEstate(information) {};
+
         void rent(int &money);
         virtual void buyLand(int idPlayer, int &price);
 
 };
 
 class Go : public Cell {
-    private:
 
     public:
         Go(){}
         Go (string information): Cell (information){}
-        void activateCell(int idPlayer);
 
+        void activateCell(int idPlayer);
         vector<string> toString();
 };
+
 class PayTax : public Cell {
-    private:
 
     public:
         PayTax(){}
         PayTax(string infomation):Cell (infomation){}
-        void activateCell (int idPlayer);
 
+        void activateCell (int idPlayer);
         vector<string> toString();
         
 } ;
+
 class GoToJail : public Cell {
-    private:
-        
+
     public:
         GoToJail(){}
         GoToJail(string information): Cell (information){}
+
         void activateCell (int idPlayer);
-        
         vector<string> toString();
 };
+
 class JailCell : public Cell {
     
 };
