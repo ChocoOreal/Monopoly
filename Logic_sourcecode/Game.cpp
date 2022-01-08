@@ -43,7 +43,8 @@ void Game::getDice(int &dice1, int &dice2)
 
 void Game::transferMoney(int idPlayerFrom, int idPlayerTo, int amount)
 {
-    
+    _listPlayer[idPlayerFrom]->changeMoney(-amount);
+    _listPlayer[idPlayerTo]->changeMoney(amount);
 }
 
 string Game::notify(const string &text, const vector <string> &listQuery, const bool waitResponde)
@@ -56,17 +57,20 @@ string Game::notify(const string &text, const vector <string> &listQuery, const 
     return _notification.ans;
 }
 
-/* Di chuyen nguoi choi idPlayer toi o co id la pos
+/* 
+    Di chuyen nguoi choi idPlayer toi o co id la pos
 */
 void Game::movePlayer(int idPlayer, int amountPos)
 {
-    //tinh toan o moi va goi ham thay doi cua nguoi choi
-    //goi ham activateCell cua o moi nguoi choi vua buoc vao
+    _listPlayer[idPlayer]->setPosition((_listPlayer[idPlayer]->Position() + amountPos)%40);
 }
 
-void Game::changeJailedState (int idPlayer, bool& jailed)
+// thật ra thì cái state đó mình cũng ko cần phải quan tâm nhiều 
+// theo định nghĩa của tên thì chỉ là thay đổi qua lại giữa hai trạng thái true / false.
+// nên để một giá trị mặc định như vậy trước, nếu muốn thì đổi luôn cũng được.
+void Game::changeJailedState(int idPlayer, bool jailed = false)
 {
-    
+    _listPlayer[idPlayer]->changeInJail();   
 }
 
 void Game::notifyChange(const string &type, int id)
@@ -99,3 +103,11 @@ void Game::endGame()
     }
 
 }
+
+
+// void Game::initializeBoard() {
+//     _listCell.resize(40);
+//     for(int i = 0; i < 40; ++i){
+//         _listCell[i].
+//     }
+// }

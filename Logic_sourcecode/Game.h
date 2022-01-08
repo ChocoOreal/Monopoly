@@ -33,6 +33,8 @@ class Game : public IGame
         } _notification;
 
         void initializePlayer(int);
+        void initializeBoard();
+        
         void endGame();
         
     public:
@@ -40,12 +42,19 @@ class Game : public IGame
         Game(int);
 
         void rollDice();
+
         void getDice(int &dice1, int &dice2);
+
         void transferMoney(int idPlayerFrom, int idPlayerTo, int amnt);
+
         string notify(const string &text, const vector <string> &listQuery = {}, const bool waitResponde = false);
+
         void movePlayer(int idPlayer, int pos);
-        void changeJailedState (int idPlayer, bool& jailed);
+
+        void changeJailedState (int idPlayer, bool jailed);
+
         void notifyChange(const string &type, int id = 0);
+
         void getNotifyChange(string &type, int &id);
 
         void ranking();

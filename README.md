@@ -90,7 +90,7 @@ Không pull/push gì thêm, không cần phải chỉnh sửa gì trong mã ngu�
 * Người chơi có phải chỉ được xây nhà vào lượt của mình và tại ô mình đang đứng hay không
 
 ## Hàm lấy dữ liệu xuất ra GUI
-* getData() -> vector <string> {Loại, Tên, Giá mua ô bàn cờ đó, Giá thuê gốc (chưa có công trình ở trên), }
+* `getData() -> vector <string> {Loại, Tên, Giá mua ô bàn cờ đó, Giá thuê gốc (chưa có công trình ở trên), }`
 * Dữ liệu người chơI: getDate() -> vector <string> {Nickname, ID_hình ảnh token, Số thứ tự lượt đi, Tiền mặt hiện có, Có đang trong tù không, Có giữ thẻ ra tù không}
 
 # Deadline: 14/1/2022
