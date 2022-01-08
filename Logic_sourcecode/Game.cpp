@@ -21,6 +21,15 @@ Game::Game(int number)
     _listCell[17] = new NormalLand("17 @ normalland @ Hi @ Hi @ 1000 @ 200 @ 2 @ 200 @ 100");
 }
 
+// nên cài đặt vào trong đây nha Như.
+// void Game::initializeBoard() {
+//     _listCell.resize(40);
+//     for(int i = 0; i < 40; ++i){
+//         _listCell[i].
+//     }
+// }
+
+
 void Game::initializePlayer(int numberOfPlayer)
 {
     _idTurnPlayer = numberOfPlayer - 1;
@@ -48,8 +57,10 @@ void Game::getDice(int &dice1, int &dice2)
 
 void Game::transferMoney(int idPlayerFrom, int idPlayerTo, int amount)
 {
-    if (idPlayerFrom != 0) _listPlayer[idPlayerFrom]->changeMoney(-amount);
-    if (idPlayerTo != 0) _listPlayer[idPlayerTo]->changeMoney(amount);
+    if (idPlayerFrom != -1) _listPlayer[idPlayerFrom]->changeMoney(-amount);
+    if (idPlayerTo != -1) _listPlayer[idPlayerTo]->changeMoney(amount);
+    notifyChange("player", idPlayerFrom);
+    notifyChange("player", idPlayerTo);
 }
 
 string Game::notify(const string &text, const vector <string> &listQuery, const bool waitResponde)
@@ -68,6 +79,7 @@ string Game::notify(const string &text, const vector <string> &listQuery, const 
 void Game::movePlayer(int idPlayer, int amountPos)
 {
     _listPlayer[idPlayer]->setPosition((_listPlayer[idPlayer]->Position() + amountPos)%40);
+    notifyChange("player", idPlayer);
 }
 
 // thật ra thì cái state đó mình cũng ko cần phải quan tâm nhiều 
@@ -76,6 +88,7 @@ void Game::movePlayer(int idPlayer, int amountPos)
 void Game::changeJailedState(int idPlayer, bool jailed = false)
 {
     _listPlayer[idPlayer]->changeInJail();   
+    notifyChange("player", idPlayer);
 }
 
 void Game::notifyChange(const string &type, int id)
@@ -106,9 +119,3 @@ void Game::endGame()
 }
 
 
-// void Game::initializeBoard() {
-//     _listCell.resize(40);
-//     for(int i = 0; i < 40; ++i){
-//         _listCell[i].
-//     }
-// }
