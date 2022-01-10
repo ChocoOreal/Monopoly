@@ -1,0 +1,40 @@
+1 @ go @ go @ collect 200$ salary as you pass @ f @ f @ f @ f @ f
+11 @ jailcell @ in jail / just visit @ prisoners stay here @ f @ f @ f @ f @ f
+21 @ park @ park @ wait for your turn @ f @ f @ f @ f @ f
+31 @ gotojail @ go to jail @ go to jail @ f @ f @ f @ f @ f
+3 @ card @ community chest @ follow instructions on drawn card @ f @ f @ f @ f @ f
+8 @ card @ chance @ follow instructions on drawn card @ f @ f @ f @ f @ f
+18 @ card @ community chest @ follow instructions on drawn card @ f @ f @ f @ f @ f
+23 @ card @ chance @ follow instructions on drawn card @ f @ f @ f @ f @ f
+34 @ card @ community chest @ follow instructions on drawn card @ f @ f @ f @ f @ f
+37 @ card @ chance @ follow instructions on drawn card @ f @ f @ f @ f @ f
+6 @ railroad @ reading railroad @ pay required rent if you are not the owner @ 200 @ 100 @ f @ f @ 200
+16 @ railroad @ pennsylvania railroad @ pay required rent if you are not the owner @ 200 @ 100 @ f @ f @ 200
+26 @ railroad @ B&G railroad @ pay required rent if you are not the owner @ 200 @ 100 @ f @ f @ 200
+36 @ railroad @ shortline @ pay required rent if you are not the owner @ 200 @ 100 @ f @ f @ 200
+13 @ factory @ electric company @ pay required rent @ 150 @ 40 @ f @ f @ 150
+29 @ factory @ water works @ pay required rent @ 150 @ 40 @ f @ f @ 150
+5 @ paytax @ income tax @ pay tax @ f @ f @ f @ f @ f
+39 @ paytax @ luxury tax @ pay tax @ f @ f @ f @ f @ f
+2 @ normalland @ mediterranean avenue @ you can build house or hotel here @ 60 @ 10 @ 1.2 @ 30 @ 45
+4 @ normalland @ baltic avenue @ you can build house or hotel here @ 60 @ 10 @ 1.2 @ 30 @ 45
+7 @ normalland @ oriental avenue @ you can build house or hotel here @ 100 @ 60 @ 1.2 @ 70 @ 80
+9 @ normalland @ vermont avenue @ you can build house or hotel here @ 100 @ 60 @ 1.2 @ 70 @ 80
+10 @ normalland @ connecticut avenue @ you can build house or hotel here @ 120 @ 80 @ 1.2 @ 90 @ 100
+12 @ normalland @ st.charles place @ you can build house or hotel here @ 140 @ 100 @ 1.2 @ 110 @ 120
+14 @ normalland @ states avanue @ you can build house or hotel here @ 140 @ 100 @ 1.2 @ 110 @ 120
+15 @ normalland @ virginia avenues @ you can build house or hotel here @ 160 @ 110 @ 1.2 @ 120 @ 130
+17 @ normalland @ st.james place @ you can build house or hotel here @ 180 @ 130 @ 1.2 @ 140 @ 150
+19 @ normalland @ tennessee avenue @ you can build house or hotel here @ 180 @ 130 @ 1.2 @ 140 @ 150
+20 @ normalland @ newyork avenue @ you can build house or hotel here @ 200 @ 150 @ 1.2 @ 160 @ 170
+22 @ normalland @ kentucky avenue @ you can build house or hotel here @ 220 @ 170 @ 1.2 @ 190 @ 200
+24 @ normalland @ indiana avenue @ you can build house or hotel here @ 220 @ 170 @ 1.2 @ 190 @ 200
+25 @ normalland @ illinois avenue @ you can build house or hotel here @ 240 @ 190 @ 1.2 @ 210 @ 220
+27 @ normalland @ atlantic avenue @ you can build house or hotel here @ 260 @ 210 @ 1.2 @ 220 @ 230
+28 @ normalland @ ventnor avenue @ you can build house or hotel here @ 260 @ 210 @ 1.2 @ 220 @ 230
+30 @ normalland @ marvin gardens @ you can build house or hotel here @ 280 @ 220 @ 1.2 @ 240 @ 250
+32 @ normalland @ pacific avenue @ you can build house or hotel here @ 300 @ 220 @ 1.2 @ 240 @ 250
+33 @ normalland @ north california avenue @ you can build house or hotel here @ 300 @ 220 @ 1.2 @ 240 @ 250
+35 @ normalland @ pennsylvania avenue @ you can build house or hotel here @ 300 @ 220 @ 1.2 @ 240 @ 250
+38 @ normalland @ park place @ you can build house or hotel here @ 350 @ 250 @ 1.2 @ 280 @ 300
+40 @ normalland @ boardwalk @ you can build house or hotel here @ 400 @ 270 @ 1.2 @ 300 @ 450
