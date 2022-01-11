@@ -62,6 +62,9 @@ class Game : public IGame
         ~Game()
         {
             endGame();
+            for(Cell*& x: _listCell){
+                delete x;
+            }
         }
 
         friend GameCommand;

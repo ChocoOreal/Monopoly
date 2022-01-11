@@ -17,9 +17,11 @@ Game::Game(int number)
     initializePlayer(number);
 
     Cell::setInterfaceGame(this);
-    _listCell.resize(45);
-    _listCell[16] = new NormalLand("16 @ normalland @ Hi @ Hi @ 0 @ 0 @ 0 @ 0 @ 0");
-    _listCell[17] = new NormalLand("17 @ normalland @ Hi @ Hi @ 1000 @ 200 @ 2 @ 200 @ 100");
+    initializeBoard();
+    // _listCell.resize(45);
+    // _listCell[16] = new NormalLand("16 @ normalland @ Hi @ Hi @ 0 @ 0 @ 0 @ 0 @ 0");
+    // _listCell[17] = new NormalLand("17 @ normalland @ Hi @ Hi @ 1000 @ 200 @ 2 @ 200 @ 100");
+    
 }
 
 
@@ -49,7 +51,7 @@ void changeTypeListCell(Cell*& now, string type, string& line){
         return;
     } else
     if (type == "park"){
-        now = new GoToJail;
+        now = new Go;
         
     }
     
@@ -75,6 +77,7 @@ void Game::initializeBoard() {
         
         changeTypeListCell(_listCell[ID], type, line);
     }
+    inp.close();
 }
 
 
