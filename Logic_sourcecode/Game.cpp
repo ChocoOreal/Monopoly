@@ -61,7 +61,7 @@ void changeTypeListCell(Cell*& now, string type, string& line){
 
 // nên cài đặt vào trong đây nha Như.
 void Game::initializeBoard() {
-    _listCell.resize(40);
+    _listCell.resize(41); // ListCell[0] will always be NULL (empty space) for nothing much.
     std::ifstream inp;
     inp.open("cellList.txt");
 
@@ -70,13 +70,14 @@ void Game::initializeBoard() {
         std::getline(inp, line);
         std::stringstream ss(line);
         int ID;
-        ss >> ID;
+        ss >> ID; // getting the block ID;
         string type;
-        ss >> type;
-        ss >> type;
-        
+        ss >> type; // reading pass the @.
+        ss >> type; // reading the land type.
+        // change according the the type and ID.
         changeTypeListCell(_listCell[ID], type, line);
     }
+    // close file
     inp.close();
 }
 
