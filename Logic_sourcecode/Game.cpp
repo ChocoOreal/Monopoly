@@ -3,6 +3,7 @@
 #include "Cell.h"
 #include "Dice.h"
 #include "CommandHandler.h"
+#include <fstream>
 
 Game::Game() 
 {
@@ -21,13 +22,60 @@ Game::Game(int number)
     _listCell[17] = new NormalLand("17 @ normalland @ Hi @ Hi @ 1000 @ 200 @ 2 @ 200 @ 100");
 }
 
+
+void changeTypeListCell(Cell*& now, string type, string& line){
+    if (type == "go"){
+        now = new Go;
+        return;
+    } else 
+    if (type == "normalland"){
+        now = new NormalLand;
+        return;
+    } else 
+    if (type == "jailcell"){
+        now = new JailCell;
+        return;
+    } else 
+    if (type == "paytax"){
+        now = new PayTax;
+        return;
+    } else 
+    if (type == "railroad"){
+        now = new Railroad;
+        return;
+    } else
+    if (type == "factory"){
+        now = new Factory;
+        return;
+    } else
+    if (type == "park"){
+        now = new GoToJail;
+        
+    }
+    
+    // if something missing, this will flag;
+    cout << "missing something";
+}
+
 // nên cài đặt vào trong đây nha Như.
-// void Game::initializeBoard() {
-//     _listCell.resize(40);
-//     for(int i = 0; i < 40; ++i){
-//         _listCell[i].
-//     }
-// }
+void Game::initializeBoard() {
+    _listCell.resize(40);
+    std::ifstream inp;
+    inp.open("cellList.txt");
+
+    for(int i = 0; i < 40; ++i){
+        string line;
+        std::getline(inp, line);
+        std::stringstream ss(line);
+        int ID;
+        ss >> ID;
+        string type;
+        ss >> type;
+        ss >> type;
+        
+        changeTypeListCell(_listCell[ID], type, line);
+    }
+}
 
 
 void Game::initializePlayer(int numberOfPlayer)
