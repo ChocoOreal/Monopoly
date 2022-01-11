@@ -27,36 +27,36 @@ Game::Game(int number)
 
 void changeTypeListCell(Cell*& now, string type, string& line){
     if (type == "go"){
-        now = new Go;
+        now = new Go(line);
         return;
     } else 
     if (type == "normalland"){
-        now = new NormalLand;
+        now = new NormalLand(line);
         return;
     } else 
     if (type == "jailcell"){
-        now = new JailCell;
+        now = new JailCell(line);
         return;
     } else 
     if (type == "paytax"){
-        now = new PayTax;
+        now = new PayTax(line);
         return;
     } else 
     if (type == "railroad"){
-        now = new Railroad;
+        now = new Railroad(line);
         return;
     } else
     if (type == "factory"){
-        now = new Factory;
+        now = new Factory(line);
         return;
     } else
     if (type == "park"){
-        now = new Go;
+        now = new Go(line);
         
     }
     
     // if something missing, this will flag;
-    cout << "missing something";
+    cout << "missing something\nStop to check that please";
 }
 
 // nên cài đặt vào trong đây nha Như.
