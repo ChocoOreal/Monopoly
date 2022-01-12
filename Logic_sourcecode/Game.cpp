@@ -9,6 +9,7 @@ Game::Game()
 {
     _idTurnPlayer = 0;
     initializePlayer(0);
+    initializeBoard();
 }
 
 Game::Game(int number) 

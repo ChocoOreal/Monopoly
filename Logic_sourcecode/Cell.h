@@ -139,7 +139,7 @@ class Railroad: public RealEstate {
 class Go : public Cell {
 
     public:
-        Go(){}
+        Go(): Cell(){}
         Go (string information): Cell (information){}
         virtual ~Go() {}
         void activateCell(int idPlayer);
@@ -149,7 +149,7 @@ class Go : public Cell {
 class PayTax : public Cell {
 
     public:
-        PayTax(){}
+        PayTax(): Cell(){}
         PayTax(string infomation):Cell (infomation){}
         virtual ~PayTax() {}
         void activateCell (int idPlayer);
@@ -172,5 +172,10 @@ class JailCell : public Cell {
         /**
          * should add something in here though
          */
-        virtual ~JailCell() {}    
+        JailCell(){}
+        JailCell(string information): Cell (information){}
+        virtual ~JailCell() {}
+        void activateCell (int idPlayer);
+        vector<string> toString();
+        
 };
