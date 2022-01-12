@@ -179,11 +179,7 @@ class JailCell : public Cell {
         JailCell(): Cell(){}
         JailCell(string information): Cell (information){}
         virtual ~JailCell() {}
-        // chưa có làm gì cả nha
-        void activateCell (int idPlayer){
-            // không biết làm gì ở đây cả :V
-            // chắc là trả về thông báo nào đó là thằng này bị tội gì <(")
-        }
-        vector<string> toString(){}
+        void activateCell (int idPlayer) {}
+        vector<string> toString() {}
         
 };
