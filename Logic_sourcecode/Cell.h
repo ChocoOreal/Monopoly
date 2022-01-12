@@ -33,8 +33,8 @@ class Cell {
         static void setInterfaceGame(IGame* iGame) { Cell::iGame = iGame; } //Set interface for Cell later
         int getID() { return ID; } //Need ID of cell since we need assign Cell pointer to right position in _listCell vector
 
-        virtual vector<string> toString() = 0;
-        virtual void activateCell(int idPlayer) = 0;
+        virtual vector<string> toString() {};
+        virtual void activateCell(int idPlayer) {};
 
         virtual ~Cell() {};
 };
@@ -141,7 +141,9 @@ class Go : public Cell {
     public:
         Go(): Cell(){}
         Go (string information): Cell (information){}
+
         virtual ~Go() {}
+        // chưa làm gì cả..
         void activateCell(int idPlayer);
         vector<string> toString();
 };
@@ -149,9 +151,10 @@ class Go : public Cell {
 class PayTax : public Cell {
 
     public:
-        PayTax(): Cell(){}
+        PayTax() {}
         PayTax(string infomation):Cell (infomation){}
         virtual ~PayTax() {}
+        // chưa làm gì cả
         void activateCell (int idPlayer);
         vector<string> toString();
         
@@ -163,6 +166,7 @@ class GoToJail : public Cell {
         GoToJail(){}
         GoToJail(string information): Cell (information){}
         virtual ~GoToJail() {}
+        // chưa làm gì cả
         void activateCell (int idPlayer);
         vector<string> toString();
 };
@@ -172,10 +176,14 @@ class JailCell : public Cell {
         /**
          * should add something in here though
          */
-        JailCell(){}
+        JailCell(): Cell(){}
         JailCell(string information): Cell (information){}
         virtual ~JailCell() {}
-        void activateCell (int idPlayer);
-        vector<string> toString();
+        // chưa có làm gì cả nha
+        void activateCell (int idPlayer){
+            // không biết làm gì ở đây cả :V
+            // chắc là trả về thông báo nào đó là thằng này bị tội gì <(")
+        }
+        vector<string> toString(){}
         
 };

@@ -50,6 +50,8 @@ class Game : public IGame
         string notify(const string &text, const vector <string> &listQuery = {}, const bool waitResponde = false);
 
         void movePlayer(int idPlayer, int pos);
+        
+        void movePlayerTo(int idPlayer, int idPlace);
 
         void changeJailedState (int idPlayer, bool jailed);
 

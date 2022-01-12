@@ -64,7 +64,7 @@ void changeTypeListCell(Cell*& now, string type, string& line){
 void Game::initializeBoard() {
     _listCell.resize(41); // ListCell[0] will always be NULL (empty space) for nothing much.
     std::ifstream inp;
-    inp.open("cellList.txt");
+    inp.open("cellsList.txt");
 
     for(int i = 0; i < 40; ++i){
         string line;
@@ -76,6 +76,7 @@ void Game::initializeBoard() {
         ss >> type; // reading pass the @.
         ss >> type; // reading the land type.
         // change according the the type and ID.
+        cout << "entering the information for the " << ID << " land \n";
         changeTypeListCell(_listCell[ID], type, line);
     }
     // close file
@@ -137,12 +138,24 @@ void Game::movePlayer(int idPlayer, int amountPos)
     notifyChange("player", idPlayer);
 }
 
+// Di chuyen nguoi choi idPlayer den o co idPlace
+void Game::movePlayerTo(int idPlayer, int idPlace){
+    int temp = (_listPlayer[idPlayer]->Position() - 1);
+    --idPlace;
+    if (idPlace >= temp){ // đi trực tiếp.
+        movePlayer(idPlayer, idPlace - temp);
+    } else { // đi một vòng tròn đến vị trí đó.
+        movePlayer(idPlayer, 40 - temp);
+        movePlayer(idPlayer, idPlace);
+    }
+}
+
 // thật ra thì cái state đó mình cũng ko cần phải quan tâm nhiều 
 // theo định nghĩa của tên thì chỉ là thay đổi qua lại giữa hai trạng thái true / false.
 // nên để một giá trị mặc định như vậy trước, nếu muốn thì đổi luôn cũng được.
 void Game::changeJailedState(int idPlayer, bool jailed = false)
 {
-    _listPlayer[idPlayer]->changeInJail();   
+    _listPlayer[idPlayer]->changeInJail(jailed);   
     notifyChange("player", idPlayer);
 }
 

@@ -91,6 +91,12 @@ void Player::changeInJail()
     _jailed ^= true;
 }
 
+// change the Jailed state for the player according to the input
+void Player::changeInJail(bool state)
+{
+    _jailed = state;
+}
+
 void Player::setName(string &newName)
 {
     _name = newName;

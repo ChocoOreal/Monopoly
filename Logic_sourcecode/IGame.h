@@ -30,11 +30,14 @@ class IGame
         */
         virtual string notify(const string &text, const vector <string> &listQuery = {}, const bool waitResponde = false) {};
         
-        //Di chuyen nguoi choi co idPlayer mot so luong pos buoc
+        // Di chuyen nguoi choi co idPlayer mot so luong pos buoc
         virtual void movePlayer(int idPlayer, int pos) {};
 
+        // Di chuyen nguoi choi tu vi tri hien tai den mot o co idPlace.
+        virtual void movePlayerTo(int idPlayer, int idPlace) {};
+
         //chuyen doi trang thai tu toi cua nguoi choi
-        virtual void changeJailedState (int idPlayer, bool& jailed) {}; 
+        virtual void changeJailedState (int idPlayer, bool jailed) {}; 
         
         /*
          Khi đối tượng Cell/Player bị thay đổi thông tin, cần gọi hàm này để cập nhật trạng thái trò chơi tại GUI

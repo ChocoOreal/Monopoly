@@ -288,7 +288,7 @@ vector <string>PayTax::toString() {
 void GoToJail::activateCell(int idPlayer) {
     bool state = true;
     iGame -> changeJailedState(idPlayer, state);
-    iGame -> movePlayer(idPlayer, (40 - (ID - 10)) % 40);
+    iGame -> movePlayerTo(idPlayer, 11);
 }
 
 vector<string> GoToJail::toString() {
