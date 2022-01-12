@@ -175,7 +175,7 @@ class JailCell : public Cell {
         JailCell(){}
         JailCell(string information): Cell (information){}
         virtual ~JailCell() {}
-        void activateCell (int idPlayer);
-        vector<string> toString();
+        void activateCell (int idPlayer) {}
+        vector<string> toString() {}
         
 };
