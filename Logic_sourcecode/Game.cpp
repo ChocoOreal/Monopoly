@@ -36,7 +36,7 @@ void changeTypeListCell(Cell*& now, string type, string& line){
         return;
     } else 
     if (type == "jailcell"){
-        now = new JailCell(line);
+        now = new Park(line);
         return;
     } else 
     if (type == "paytax"){
@@ -52,12 +52,21 @@ void changeTypeListCell(Cell*& now, string type, string& line){
         return;
     } else
     if (type == "park"){
-        now = new Go(line);
-        
+        now = new Park(line);   
+        return;
     }
-    
+    else 
+    if (type == "gotojail"){
+        now = new GoToJail(line);
+        return;
+    }
+    else 
+    if (type == "card"){
+        now = new Card;
+        return;
+    }
     // if something missing, this will flag;
-    cout << "missing something\nStop to check that please";
+    cout << "missing something\nStop to check that please\n";
 }
 
 // nên cài đặt vào trong đây nha Như.

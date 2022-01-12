@@ -171,15 +171,13 @@ class GoToJail : public Cell {
         vector<string> toString();
 };
 
-class JailCell : public Cell {
+class Park: public Cell
+{
     public:
-        /**
-         * should add something in here though
-         */
-        JailCell(): Cell(){}
-        JailCell(string information): Cell (information){}
-        virtual ~JailCell() {}
-        void activateCell (int idPlayer) {}
-        vector<string> toString() {}
-        
+        Park():Cell() {}
+        Park(string information): Cell(information) {}
+        virtual ~Park() {}
+        void activateCell(int idPlayer) {}
+        vector<string> toString();
 };
+
