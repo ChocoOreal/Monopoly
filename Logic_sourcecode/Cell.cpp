@@ -65,7 +65,10 @@ void Card::activateCell(int idPlayer) {
     iGame -> notifyChange("player", idPlayer);
 }
 
-vector<string> Card::toString() {}
+vector<string> Card::toString() {
+    vector<string> v = {"Card chua co toString nha :V"};
+    return v;
+}
 
 /* 
     RealEstate implement

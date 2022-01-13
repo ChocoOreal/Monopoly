@@ -33,8 +33,8 @@ class Cell {
         static void setInterfaceGame(IGame* iGame) { Cell::iGame = iGame; } //Set interface for Cell later
         int getID() { return ID; } //Need ID of cell since we need assign Cell pointer to right position in _listCell vector
 
-        virtual vector<string> toString() {};
-        virtual void activateCell(int idPlayer) {};
+        virtual vector<string> toString() = 0;
+        virtual void activateCell(int idPlayer) = 0;
 
         virtual ~Cell() {};
 };

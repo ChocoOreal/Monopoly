@@ -69,7 +69,7 @@ void changeTypeListCell(Cell*& now, string type, string& line){
     cout << "missing something\nStop to check that please\n";
 }
 
-// nên cài đặt vào trong đây nha Như.
+
 void Game::initializeBoard() {
     _listCell.resize(41); // ListCell[0] will always be NULL (empty space) for nothing much.
     std::ifstream inp;
@@ -85,8 +85,12 @@ void Game::initializeBoard() {
         ss >> type; // reading pass the @.
         ss >> type; // reading the land type.
         // change according the the type and ID.
-        cout << "entering the information for the " << ID << " land \n";
+        
         changeTypeListCell(_listCell[ID], type, line);
+        for(string x: _listCell[ID]->toString()){
+            cout << x << ' ';
+        }
+        cout << '\n';
     }
     // close file
     inp.close();

@@ -35,7 +35,7 @@ Player::~Player()
 {
 }
 
-// getter :>
+
 
 // return the Player's current _money
 float Player::Money()

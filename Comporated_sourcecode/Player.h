@@ -58,7 +58,7 @@ class Player
 
     public:
         void changeInJail();
-        
+        void changeInJail(bool);
         // Increase (or decrease) Player's current money
         void changeMoney(const float &);
 

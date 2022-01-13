@@ -65,8 +65,10 @@ void Card::activateCell(int idPlayer) {
     iGame -> notifyChange("player", idPlayer);
 }
 
-vector<string> Card::toString() {}
-
+vector<string> Card::toString() {
+    vector<string> v = {"Card chua co toString nha :V"};
+    return v;
+}
 /* 
     RealEstate implement
 */
@@ -292,6 +294,27 @@ void GoToJail::activateCell(int idPlayer) {
 }
 
 vector<string> GoToJail::toString() {
+    vector<string> v(13);
+    v[0] = std::to_string(ID);
+    v[1] = _typeName;
+    v[2] = _name;
+    v[3] = _description;
+    v[4] =" ";
+    v[5] = _rawInfo[5];
+    v[6] = " ";
+    v[7] = " ";
+    v[8] = " ";
+    v[9] = " ";
+    v[10] = " ";
+    v[11] = " ";
+    v[12] = " ";
+    return v;
+}
+/**
+ * Park class implementation
+ * activateCell and toString methods
+ */
+vector<string> Park::toString(){
     vector<string> v(13);
     v[0] = std::to_string(ID);
     v[1] = _typeName;

@@ -3,6 +3,7 @@
 #include "Cell.h"
 #include "Dice.h"
 #include "CommandHandler.h"
+#include <fstream>
 
 Game::Game() 
 {
@@ -16,9 +17,83 @@ Game::Game(int number)
     initializePlayer(number);
 
     Cell::setInterfaceGame(this);
-    _listCell.resize(45);
-    _listCell[16] = new NormalLand("16 @ normalland @ Hi @ Hi @ 0 @ 0 @ 0 @ 0 @ 0");
-    _listCell[17] = new NormalLand("17 @ normalland @ Hi @ Hi @ 1000 @ 200 @ 2 @ 200 @ 100");
+    initializeBoard();
+    // _listCell.resize(45);
+    // _listCell[16] = new NormalLand("16 @ normalland @ Hi @ Hi @ 0 @ 0 @ 0 @ 0 @ 0");
+    // _listCell[17] = new NormalLand("17 @ normalland @ Hi @ Hi @ 1000 @ 200 @ 2 @ 200 @ 100");
+}
+
+
+void changeTypeListCell(Cell*& now, string type, string& line){
+    if (type == "go"){
+        now = new Go(line);
+        return;
+    } else 
+    if (type == "normalland"){
+        now = new NormalLand(line);
+        return;
+    } else 
+    if (type == "jailcell"){
+        now = new Park(line);
+        return;
+    } else 
+    if (type == "paytax"){
+        now = new PayTax(line);
+        return;
+    } else 
+    if (type == "railroad"){
+        now = new Railroad(line);
+        return;
+    } else
+    if (type == "factory"){
+        now = new Factory(line);
+        return;
+    } else
+    if (type == "park"){
+        now = new Park(line);   
+        return;
+    }
+    else 
+    if (type == "gotojail"){
+        now = new GoToJail(line);
+        return;
+    }
+    else 
+    if (type == "card"){
+        now = new Card;
+        return;
+    }
+    // if something missing, this will flag;
+    cout << "missing something\nStop to check that please\n";
+}
+
+
+void Game::initializeBoard() {
+    _listCell.resize(41); // ListCell[0] will always be NULL (empty space) for nothing much.
+    std::ifstream inp;
+    inp.open("cellsList.txt");
+
+    for(int i = 0; i < 40; ++i){
+        string line;
+        std::getline(inp, line);
+        std::stringstream ss(line);
+        int ID;
+        ss >> ID; // getting the block ID;
+        string type;
+        ss >> type; // reading pass the @.
+        ss >> type; // reading the land type.
+        // change according the the type and ID.
+        
+        changeTypeListCell(_listCell[ID], type, line);
+
+        // chỗ này chỉ dùng để cout ra màn hình để check thôi nha :V
+        for(string x: _listCell[ID]->toString()){
+            cout << x << ' ';
+        }
+        cout << '\n';
+    }
+    // close file
+    inp.close();
 }
 
 void Game::initializePlayer(int numberOfPlayer)
@@ -48,8 +123,10 @@ void Game::getDice(int &dice1, int &dice2)
 
 void Game::transferMoney(int idPlayerFrom, int idPlayerTo, int amnt)
 {
-    if (idPlayerFrom != 0) _listPlayer[idPlayerFrom]->changeMoney(-amnt);
-    if (idPlayerTo != 0) _listPlayer[idPlayerTo]->changeMoney(amnt);
+    if (idPlayerFrom != -1) _listPlayer[idPlayerFrom]->changeMoney(-amnt);
+    if (idPlayerTo != -1) _listPlayer[idPlayerTo]->changeMoney(amnt);
+    notifyChange("player", idPlayerFrom);
+    notifyChange("player", idPlayerTo);
 }
 
 string Game::notify(const string &text, const vector <string> &listQuery, const bool waitResponde)
@@ -66,13 +143,28 @@ string Game::notify(const string &text, const vector <string> &listQuery, const 
 */
 void Game::movePlayer(int idPlayer, int amountPos)
 {
-    //tinh toan o moi va goi ham thay doi cua nguoi choi
-    //goi ham activateCell cua o moi nguoi choi vua buoc vao
+    int temp = (_listPlayer[idPlayer]->Position() - 1 + amountPos) % 40;
+    ++temp;
+    _listPlayer[idPlayer]->setPosition(temp);
+    notifyChange("player", idPlayer);
+}
+
+// Di chuyen nguoi choi idPlayer den o co idPlace
+void Game::movePlayerTo(int idPlayer, int idPlace){
+    int temp = (_listPlayer[idPlayer]->Position() - 1);
+    --idPlace;
+    if (idPlace >= temp){ // đi trực tiếp.
+        movePlayer(idPlayer, idPlace - temp);
+    } else { // đi một vòng tròn đến vị trí đó.
+        movePlayer(idPlayer, 40 - temp);
+        movePlayer(idPlayer, idPlace);
+    }
 }
 
 void Game::changeJailedState (int idPlayer, bool& jailed)
 {
-    
+    _listPlayer[idPlayer]->changeInJail(jailed);   
+    notifyChange("player", idPlayer);
 }
 
 void Game::notifyChange(const string &type, int id)
