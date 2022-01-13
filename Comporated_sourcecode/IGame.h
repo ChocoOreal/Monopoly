@@ -34,8 +34,13 @@ class IGame
         virtual void movePlayer(int idPlayer, int pos) = 0;
 
         //chuyen doi trang thai tu toi cua nguoi choi
-        virtual void changeJailedState (int idPlayer, bool& jailed) = 0; 
+        virtual void changeJailedState (int idPlayer, bool jailed) = 0; 
         
+        // Di chuyen nguoi choi tu vi tri hien tai den mot o co idPlace.
+        virtual void movePlayerTo(int idPlayer, int idPlace) = 0;
+
+        
+
         /*
          Khi đối tượng Cell/Player bị thay đổi thông tin, cần gọi hàm này để cập nhật trạng thái trò chơi tại GUI
             * type: loại đối tượng bị thay đổi ("cell": ô bàn cờ/ "player": người chơi)

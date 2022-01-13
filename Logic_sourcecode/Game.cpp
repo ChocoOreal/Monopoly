@@ -161,6 +161,7 @@ void Game::movePlayerTo(int idPlayer, int idPlace){
         movePlayer(idPlayer, 40 - temp);
         movePlayer(idPlayer, idPlace);
     }
+    notifyChange("player", idPlayer);
 }
 
 // thật ra thì cái state đó mình cũng ko cần phải quan tâm nhiều 

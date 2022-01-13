@@ -159,6 +159,7 @@ void Game::movePlayerTo(int idPlayer, int idPlace){
         movePlayer(idPlayer, 40 - temp);
         movePlayer(idPlayer, idPlace);
     }
+    notifyChange("player", idPlayer);
 }
 
 void Game::changeJailedState (int idPlayer, bool& jailed)
