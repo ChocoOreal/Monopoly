@@ -103,11 +103,8 @@ void Game::syncData()
 
 void Game::rollDice()
 {
-    std::random_device rd; // obtain a random number from hardware
-    std::mt19937 gen(rd()); // seed the generator
-    std::uniform_int_distribution<> Dice(1, 6);
-    _dice1 = Dice(gen);
-    _dice2 = Dice(gen);
+    _dice1 = rand() % 6 + 1;
+    _dice2 = rand() % 6 + 1;
 
     notifyChange("dice");
 }

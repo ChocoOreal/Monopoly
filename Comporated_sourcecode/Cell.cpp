@@ -77,12 +77,8 @@ Card::Card(const string &information) : Cell(information) {
 void Card::drawCard () {
 
     //@ chu tren the @ gia tri cua the (duong hoac am)\n
-    std::random_device rd; // obtain a random number from hardware
-    std::mt19937 gen(rd()); // seed the generator
-    std::uniform_int_distribution<> Card(1, 2);
-    std::uniform_int_distribution<> Dice(1, 6);
-    int type = Card(gen);
-    int i = Dice(gen); //random
+    int type = (rand() % 2) + 1;
+    int i = (rand() % 6) + 1; //random
 
     string card;
     if (type == 1) {
