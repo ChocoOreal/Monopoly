@@ -28,33 +28,36 @@ class Cell {
 
     public:
         Cell(){}
-        Cell (string infomation) ;
+        Cell (const string &infomation) ;
 
         static void setInterfaceGame(IGame* iGame) { Cell::iGame = iGame; } //Set interface for Cell later
         int getID() { return ID; } //Need ID of cell since we need assign Cell pointer to right position in _listCell vector
+        string getName() { return _name; }
 
-        virtual vector<string> toString() = 0;
+        virtual vector<string> toString();
+        virtual void bankruptThisCell(int idPlayer, int idCreditor);
+
         virtual void activateCell(int idPlayer) = 0;
 
-        virtual ~Cell() {};
+        virtual ~Cell();
 };
 
 class Card: public Cell {
 
     private:
-        string luckyCard[10];
-        string chancesCard[10];
-        string currentCard;
+        static string luckyCard[10];
+        static string chancesCard[10];
+        static string currentCard;
 
     public:
-        Card();
+        Card(const string &information);
 
         void drawCard ();
 
         void activateCell(int idPlayer);
         vector <string> toString();
 
-        virtual ~Card() {}
+        ~Card();
 };
 
 class RealEstate: public Cell {
@@ -68,10 +71,12 @@ class RealEstate: public Cell {
 
     public:
         RealEstate();
-        RealEstate(string information);
+        RealEstate(const string &information);
 
         void mortgage(int &money);
+        void redeem(int &money);
         void activateCell(int idPlayer);
+        void bankruptThisCell(int idPlayer, int idCreditor);
         virtual void buyLand(int idPlayer, int &price);
 
 
@@ -86,7 +91,7 @@ class RealEstate: public Cell {
         //attribute which has boolean type will be saved as a string of "true" or "false"
         virtual vector<string> toString();
 
-        virtual ~RealEstate() {}
+        ~RealEstate() {}
 };
 
 class NormalLand: public RealEstate {
@@ -99,13 +104,14 @@ class NormalLand: public RealEstate {
 
     public:
         NormalLand();
-        NormalLand(string information);
+        NormalLand(const string &information);
 
         void build(int &price);
         void sellHouse(int &money);
-        void rent(int &money) {money = _rentPrice * _COEFFICIENT;}
+        void rent(int &money) { money = _rentPrice; }
+        void bankruptThisCell(int idPlayer, int creditor);
         
-        virtual ~NormalLand() {}
+        ~NormalLand() {}
         vector<string> toString();
 };
 
@@ -117,8 +123,8 @@ class Factory : public RealEstate
 
     public:
         Factory() : RealEstate() {};
-        Factory(string information) : RealEstate(information) {};
-        ~Factory() {}
+        Factory(const string &information) : RealEstate(information) {};
+
         void rent(int &money);
 };
 
@@ -129,10 +135,12 @@ class Railroad: public RealEstate {
 
     public:
         Railroad() : RealEstate() {};
-        Railroad(string information) : RealEstate(information) {};
-        virtual ~Railroad() {}
+        Railroad(const string &information) : RealEstate(information) {};
+
         void rent(int &money);
         virtual void buyLand(int idPlayer, int &price);
+
+        ~Railroad();
 
 };
 
@@ -140,10 +148,9 @@ class Go : public Cell {
 
     public:
         Go(){}
-        Go (string information): Cell (information){}
+        Go (const string &information): Cell (information){}
 
-        virtual ~Go() {}
-        // chưa làm gì cả..
+        void passGoCell(int idPlayer);
 
         void activateCell(int idPlayer);
         vector<string> toString();
@@ -153,30 +160,41 @@ class PayTax : public Cell {
 
     public:
         PayTax(){}
-        PayTax(string infomation):Cell (infomation){}
-        virtual ~PayTax() {}
+        PayTax(const string &infomation):Cell (infomation){}
+
         void activateCell (int idPlayer);
-        vector<string> toString();
-        
+        vector<string> toString();     
 } ;
 
 class GoToJail : public Cell {
 
     public:
         GoToJail(){}
-        GoToJail(string information): Cell (information){}
-        virtual ~GoToJail() {}
+        GoToJail(const string &information): Cell (information){}
 
         void activateCell (int idPlayer);
         vector<string> toString();
 };
 
-class Park: public Cell
+class JailCell : public Cell {
+
+    private:
+        static int numberRollDice[4];
+
+    public:
+        JailCell(const string &information) : Cell (information){}
+
+        void activateCell(int idPlayer);
+        vector<string> toString();
+
+        ~JailCell();
+};
+
+class Park : public Cell
 {
     public:
-        Park(): Cell() {}
-        Park(string information): Cell(information) {}
-        virtual ~Park() {}
-        void activateCell(int idPlayer) {}
+        Park(const string &information) : Cell (information){}
+
+        void activateCell(int idPlayer);
         vector<string> toString();
 };

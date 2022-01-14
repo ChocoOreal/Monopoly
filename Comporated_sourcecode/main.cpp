@@ -1,6 +1,4 @@
-#include "mainwindow.h"
-#include "Player.h"
-#include "Cell.h"
+#include "mainprogrammanager.h"
 #include "RunningGameMode.h"
 #include <iostream>
 
@@ -8,14 +6,14 @@
 
 using namespace std;
 
-int Player::InstanceCount = 0;
-int Railroad::playerOwnerNum[4] = {};
-
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    RunningGameMode gameRunning(4);
+    //RunningGameMode gameRunning(4);
+
+    MainProgramManager test;
+    test.show();
 
     return a.exec();
 }

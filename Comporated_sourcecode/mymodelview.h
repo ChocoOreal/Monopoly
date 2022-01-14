@@ -31,10 +31,11 @@ public:
     void attachViewWithModel(QAbstractItemView *view, int idModel);
     void setTypeFilterProperty(const string &type, const QString &player);
 
+    vector<string> queryInforPlayer(int idPlayer);
+    bool canBuy(int id);
+
     void updateCellData(int idCell, vector <string> info);
     void updatePlayerData(int idPlayer, vector <string> info);
-
-    QString getNameOfIdPlayer(int idPlayer);
 
     ~myModelView();
 };

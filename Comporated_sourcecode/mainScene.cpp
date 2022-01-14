@@ -1,15 +1,15 @@
 #include "mainScene.h"
 #include "cellitem.h"
+#include "mainwindow.h"
 #include <QPainter>
 #include <QGraphicsPixmapItem>
+#include <QTimer>
+#include <QObject>
 
 MainScene::MainScene(QObject *parent) : QGraphicsScene(parent)
 {
+    MainScene::mainWindow = (MainWindow*) parent;
 
-}
-
-void MainScene::setupMainScene()
-{
     //Load Board image. Stick it to mainScene
     QImage imageBoard("Image/Board.jpg");
     if (imageBoard.isNull()) qDebug() << "Error: Not found Board image!\n";
@@ -23,17 +23,26 @@ void MainScene::setupMainScene()
 
     //Load Cell area control
     setupCell();
+}
 
-    //Test set piece
-    QImage imagePiece("Image/car.png");
-    piece = this->addPixmap( QPixmap::fromImage(imagePiece) );
-    piece->setScale(0.04);
-
-    setPiece(piece, 1);
+void MainScene::setupMainScene(int numPlayer)
+{
+    for (int i = 0; i < numPlayer; i++)
+    {
+        vector<string> infoPlayer = mainWindow->queryInfoPlayer(i);
+        QImage imagePiece = QImage( QString::fromStdString(infoPlayer[3]) );
+        piece[i] = this->addPixmap( QPixmap::fromImage(imagePiece) );
+        piece[i]->setScale(0.06);
+        locate[i] = new QGraphicsRectItem(0, 0, piece[i]->boundingRect().height() * 0.06, piece[i]->boundingRect().height() * 0.06);
+        locate[i]->setPen( QPen(MainWindow::colorOfPlayer[i], 5) );
+        setPiece(i, 1);
+    }
 }
 
 void MainScene::setupCell()
 {
+    CellItem::setMainWindow(mainWindow);
+
     int tmp = 134;
 
     //Cells at bottom
@@ -51,6 +60,8 @@ void MainScene::setupCell()
     {
         cellItem[i] = new CellItem( QPointF(tmp, 0), 84, 133, i, this);
         this->addItem( cellItem[i] );
+        cellItem[i]->setTransformOriginPoint(84/2, 133/2);
+        cellItem[i]->setRotation(180);
         cellItem[i]->setPos( QPointF(tmp, 0) );
         tmp += 84;
     }
@@ -59,9 +70,11 @@ void MainScene::setupCell()
     tmp = 134;
     for (int i = 20; i >= 12; i--)
     {
-        cellItem[i] = new CellItem( QPointF(0, tmp), 133, 84, i, this);
+        cellItem[i] = new CellItem( QPointF(0, tmp), 84, 133, i, this);
         this->addItem( cellItem[i] );
         cellItem[i]->setPos( QPointF(0, tmp) );
+        cellItem[i]->setRotation(90);
+        cellItem[i]->setPos( cellItem[i]->pos() + QPointF(133, 0) );
         tmp += 84;
     }
 
@@ -69,9 +82,11 @@ void MainScene::setupCell()
     tmp = 134;
     for (int i = 32; i <= 40; i++)
     {
-        cellItem[i] = new CellItem( QPointF(890, tmp), 133, 84, i, this);
+        cellItem[i] = new CellItem( QPointF(890, tmp), 84, 133, i, this);
         this->addItem( cellItem[i] );
         cellItem[i]->setPos( QPointF(890, tmp) );
+        cellItem[i]->setRotation(-90);
+        cellItem[i]->setPos( cellItem[i]->pos() + QPointF(0, 84) );
         tmp += 84;
     }
 
@@ -93,6 +108,8 @@ void MainScene::setupCell()
 
     //Due to modulo property, numId 40 will become 0 after modulo with 40
     cellItem[0] = cellItem[40];
+
+    cellItem[2]->setHouse(4);
 }
 
 //Load image of dice to the mainScene
@@ -116,11 +133,38 @@ void MainScene::setDiceImage(int number, int idDice)
 }
 
 //Load image of piece to the right cell
-void MainScene::setPiece(QGraphicsPixmapItem *&piece, int idCell)
+void MainScene::setPiece(int idPlayer, int idCell)
 {
-    piece->setParentItem( cellItem[idCell] );
-    //piece->setPos( cellItem[idCell]->getWidth() / 4,  cellItem[idCell]->getHeight() / 4 );
-    piece->setPos(0, 0);
+    if (piece[idPlayer] == nullptr) return;
+
+    CellItem *tmpOldCell = dynamic_cast<CellItem *>( piece[idPlayer]->parentItem() );
+    if (tmpOldCell != nullptr) tmpOldCell->changeNumberPlayerIn(false);
+
+    int numPlayerInCell = cellItem[idPlayer]->getNumberPlayerIn();
+    piece[idPlayer]->setParentItem( cellItem[idCell] );
+    piece[idPlayer]->setPos( cellItem[idCell]->getWidth() / 4,  cellItem[idCell]->getHeight() / 4 + 5 * (numPlayerInCell - 1) );
+    cellItem[idCell]->changeNumberPlayerIn(true);
+
+    locate[idPlayer]->setParentItem(cellItem[idCell]);
+    locate[idPlayer]->setPos( piece[idPlayer]->pos() );
+
+    mainWindow->showCellInfo(idCell);
+}
+
+void MainScene::setHouse(int idCell, int numberOfHouse)
+{
+    cellItem[idCell]->setHouse(numberOfHouse);
+}
+
+void MainScene::chooseCell(int idCell)
+{
+    for (int i = 1; i <= 40; i++) cellItem[i]->setSelected();
+    cellItem[idCell]->setSelected(true);
+}
+
+void MainScene::colorCellAsOwner(int idCell, Qt::GlobalColor color)
+{
+    cellItem[idCell]->setColorOwner(color);
 }
 
 void MainScene::mousePressEvent(QGraphicsSceneMouseEvent *event)

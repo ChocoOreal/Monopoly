@@ -3,108 +3,99 @@
 #include "Cell.h"
 #include "Dice.h"
 #include "CommandHandler.h"
+#include "gamecomponents.h"
+#include <iostream>
 #include <fstream>
+#include <QDebug>
+#include "RunningGameMode.h"
+#include <QString>
+#include "settingrule.h"
 
 Game::Game() 
 {
-    _idTurnPlayer = 0;
-    initializePlayer(0);
 }
 
-Game::Game(int number) 
+Game::Game(int number, vector< vector<string> > playerInformation, RunningGameMode* runningGameMode, SettingRule *curSettingRule)
 {
-    _idTurnPlayer = number - 1;
-    initializePlayer(number);
+    globalGameStatus = new GlobalGameStatus(this);
+    _notification = new Notify;
+    Game::curSettingRule = curSettingRule;
+
+    initializePlayer(number, playerInformation);
+    initializeBoard();
 
     Cell::setInterfaceGame(this);
-    initializeBoard();
-    // _listCell.resize(45);
-    // _listCell[16] = new NormalLand("16 @ normalland @ Hi @ Hi @ 0 @ 0 @ 0 @ 0 @ 0");
-    // _listCell[17] = new NormalLand("17 @ normalland @ Hi @ Hi @ 1000 @ 200 @ 2 @ 200 @ 100");
+
+    Game::runningGameMode = runningGameMode;
 }
-
-
-void changeTypeListCell(Cell*& now, string type, string& line){
-    if (type == "go"){
-        now = new Go(line);
-        return;
-    } else 
-    if (type == "normalland"){
-        now = new NormalLand(line);
-        return;
-    } else 
-    if (type == "jailcell"){
-        now = new Park(line);
-        return;
-    } else 
-    if (type == "paytax"){
-        now = new PayTax(line);
-        return;
-    } else 
-    if (type == "railroad"){
-        now = new Railroad(line);
-        return;
-    } else
-    if (type == "factory"){
-        now = new Factory(line);
-        return;
-    } else
-    if (type == "park"){
-        now = new Park(line);   
-        return;
-    }
-    else 
-    if (type == "gotojail"){
-        now = new GoToJail(line);
-        return;
-    }
-    else 
-    if (type == "card"){
-        now = new Card;
-        return;
-    }
-    // if something missing, this will flag;
-    cout << "missing something\nStop to check that please\n";
-}
-
 
 void Game::initializeBoard() {
-    _listCell.resize(41); // ListCell[0] will always be NULL (empty space) for nothing much.
-    std::ifstream inp;
-    inp.open("cellsList.txt");
+     //In case pointer of cells are invalid
+     _listCell.resize(41);
+     for (int i = 0; i <= 40; i++) _listCell[i] = nullptr;
 
-    for(int i = 0; i < 40; ++i){
-        string line;
-        std::getline(inp, line);
-        std::stringstream ss(line);
-        int ID;
-        ss >> ID; // getting the block ID;
-        string type;
-        ss >> type; // reading pass the @.
-        ss >> type; // reading the land type.
-        // change according the the type and ID.
-        
-        changeTypeListCell(_listCell[ID], type, line);
+     //Use to store data read from file data
+     vector <string> tmpString;
+     tmpString.resize(40);
 
-        // chỗ này chỉ dùng để cout ra màn hình để check thôi nha :V
-        for(string x: _listCell[ID]->toString()){
-            cout << x << ' ';
-        }
-        cout << '\n';
-    }
-    // close file
-    inp.close();
+     std::ifstream DataFile("Data\\cellsList.txt");
+     for (int i = 0; i < 40; i++) std::getline(DataFile, tmpString[i]);
+
+     _listCell[1] = new Go(tmpString[0]);
+     _listCell[11] = new JailCell(tmpString[1]);
+     _listCell[21] = new Park(tmpString[2]);
+     _listCell[31] = new GoToJail(tmpString[3]);
+
+     for (int i = 4; i <= 9; i++)
+     {
+         Card *tmpCell = new Card(tmpString[i]);
+         _listCell[ tmpCell->getID() ] = tmpCell;
+     }
+
+     for (int i = 10; i <= 13; i++)
+     {
+         Railroad *tmpCell = new Railroad(tmpString[i]);
+         _listCell[ tmpCell->getID() ] = tmpCell;
+     }
+
+     for (int i = 14; i <= 15; i++)
+     {
+         Factory *tmpCell = new Factory(tmpString[i]);
+         _listCell[ tmpCell->getID() ] = tmpCell;
+     }
+
+     for (int i = 16; i <= 17; i++)
+     {
+         PayTax *tmpCell = new PayTax(tmpString[i]);
+         _listCell[ tmpCell->getID() ] = tmpCell;
+     }
+
+     for (int i = 18; i <= 39; i++)
+     {
+         NormalLand *tmpCell = new NormalLand(tmpString[i]);
+         _listCell[ tmpCell->getID() ] = tmpCell;
+     }
 }
 
-void Game::initializePlayer(int numberOfPlayer)
+
+void Game::initializePlayer(int numberOfPlayer, vector< vector<string> > &playerInformation)
 {
-    _idTurnPlayer = numberOfPlayer - 1;
     _listPlayer.resize(numberOfPlayer);
     
     for (Player *&curPlayer : _listPlayer)
     {
-        curPlayer = new Player (this, "Hoang");
+        curPlayer = new Player (this, playerInformation[Player::InstanceCount][0], playerInformation[Player::InstanceCount][1]);
     }
+}
+
+void Game::syncData()
+{
+    for (int i = 1; i <= 40; i++)
+        if (_listCell[i] != nullptr) notifyChange("cell", i);
+    for (int i = 0; i < Player::InstanceCount; i++) notifyChange("player", i);
+    globalGameStatus->setTurnPlayer(0);
+
+    notify( askStringName("player", 0) + " bắt đầu trò chơi đầu tiên");
 }
 
 void Game::rollDice()
@@ -121,51 +112,43 @@ void Game::getDice(int &dice1, int &dice2)
     dice2 = _dice2;
 }
 
-void Game::transferMoney(int idPlayerFrom, int idPlayerTo, int amnt)
+void Game::transferMoney(int idPlayerFrom, int idPlayerTo, int amount)
 {
-    if (idPlayerFrom != -1) _listPlayer[idPlayerFrom]->changeMoney(-amnt);
-    if (idPlayerTo != -1) _listPlayer[idPlayerTo]->changeMoney(amnt);
-    notifyChange("player", idPlayerFrom);
-    notifyChange("player", idPlayerTo);
+    if (idPlayerFrom != -1) _listPlayer[idPlayerFrom]->changeMoney(-amount);
+    if (idPlayerTo != -1) _listPlayer[idPlayerTo]->changeMoney(amount);
+    if (idPlayerFrom != -1) _listPlayer[idPlayerFrom]->setDebtTo(idPlayerTo);
+
+    notify( askStringName("player", idPlayerTo) + " nhận " + std::to_string(amount) + " từ " + askStringName("player", idPlayerFrom) );
 }
 
 string Game::notify(const string &text, const vector <string> &listQuery, const bool waitResponde)
 {
-    _notification.textNotify = text;
-    _notification.listQuery = listQuery;
+    _notification->setNotify(text, listQuery, waitResponde);
 
     invoker->doCommand(7);
 
-    return _notification.ans;
+    return _notification->getAns();
 }
 
-/* Di chuyen nguoi choi idPlayer toi o co id la pos
+/* 
+    Di chuyen nguoi choi idPlayer toi o co id la pos
 */
 void Game::movePlayer(int idPlayer, int amountPos)
 {
     int temp = (_listPlayer[idPlayer]->Position() - 1 + amountPos) % 40;
     ++temp;
+
+    if (_listPlayer[idPlayer]->Position() > temp) dynamic_cast<Go*>( _listCell[1])->passGoCell(idPlayer);
     _listPlayer[idPlayer]->setPosition(temp);
-    notifyChange("player", idPlayer);
+    if (temp != 11) _listCell[temp]->activateCell( idPlayer );
 }
 
-// Di chuyen nguoi choi idPlayer den o co idPlace
-void Game::movePlayerTo(int idPlayer, int idPlace){
-    int temp = (_listPlayer[idPlayer]->Position() - 1);
-    --idPlace;
-    if (idPlace >= temp){ // đi trực tiếp.
-        movePlayer(idPlayer, idPlace - temp);
-    } else { // đi một vòng tròn đến vị trí đó.
-        movePlayer(idPlayer, 40 - temp);
-        movePlayer(idPlayer, idPlace);
-    }
-    notifyChange("player", idPlayer);
-}
-
-void Game::changeJailedState (int idPlayer, bool& jailed)
+// thật ra thì cái state đó mình cũng ko cần phải quan tâm nhiều 
+// theo định nghĩa của tên thì chỉ là thay đổi qua lại giữa hai trạng thái true / false.
+// nên để một giá trị mặc định như vậy trước, nếu muốn thì đổi luôn cũng được.
+void Game::changeJailedState(int idPlayer, bool jailed = false)
 {
-    _listPlayer[idPlayer]->changeInJail(jailed);   
-    notifyChange("player", idPlayer);
+    _listPlayer[idPlayer]->changeInJail();   
 }
 
 void Game::notifyChange(const string &type, int id)
@@ -181,20 +164,52 @@ void Game::getNotifyChange(string &type, int &id)
     id = _idUpdate;
 }
 
-void Game::ranking()
+string Game::askStringName(const string &type, int id)
 {
+    if (type == "player") return ( (id >= 0 && id < Player::InstanceCount) ? _listPlayer[id]->Name() : "No" );
+    else if (type == "cell") return ( (id >= 1 && id <= 40) ? _listCell[id]->getName() : "No" );
+
+    return "";
+}
+
+int Game::querySettingRule(const string &queryOp)
+{
+    if (queryOp == "parkOp") return curSettingRule->getParkOp();
+    else if (queryOp == "passGoOp") return curSettingRule->getPassGoOp();
+    else if (queryOp == "inGoOp") return curSettingRule->getInGoOp();
+    else return curSettingRule->getStartOp();
+}
+
+void Game::declareBankruptPlayer(int idPlayerBankrupt)
+{
+    int idCreditor = _listPlayer[idPlayerBankrupt]->debtTo();
+
+    for (int i = 1; i <= 40; i++) _listCell[i]->bankruptThisCell(idPlayerBankrupt, idCreditor);
+    transferMoney(idPlayerBankrupt, idCreditor, _listPlayer[idPlayerBankrupt]->Money() );
+    _listPlayer[idPlayerBankrupt]->setGameOver();
+    Player::NumberLeftPlayer--;
+    qDebug() << Player::NumberLeftPlayer;
+    if (Player::NumberLeftPlayer <= 1) endGame();
 }
 
 void Game::endGame()
 {
-    _idTurnPlayer = 0;
+    int playerWin(0);
 
-    for (Player*& curPlayer: _listPlayer) 
-    {
-        if (curPlayer != NULL) 
+    for (int i = 0; i < Player::InstanceCount; i++)
+        if ( !_listPlayer[i]->IsGameOver() )
         {
-            delete curPlayer;
+            playerWin = i;
+            break;
         }
-    }
 
+    notify( askStringName("player", playerWin) + " đã may mắn chiến thắng một cách ngoạn mục!", {}, true);
+    runningGameMode->notifyGameOver();
 }
+
+Game::~Game()
+{
+    for (int i = 0; i < _listPlayer.size(); i++) delete _listPlayer[i];
+    for (int i = 1; i <= 40; i++) delete _listCell[i];
+}
+

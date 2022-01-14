@@ -29,6 +29,7 @@ private slots:
     void on_exitButton_clicked();
     void on_confirmButton_clicked();
     void on_backButton_clicked();
+    void on_listProperty_clicked(const QModelIndex& index);
 
 private:
     Ui::PropertyManager *ui;
@@ -39,6 +40,7 @@ private:
     QString modeSelected, playerDoTask;
 
     void modeButtons(int mode);
+    void showCellInfo(int idCell);
 
     void showEvent(QShowEvent *event);
     void resizeEvent(QResizeEvent *event);

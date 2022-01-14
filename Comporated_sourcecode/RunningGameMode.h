@@ -1,38 +1,42 @@
 #ifndef RUNNINGGAMEMODE_H
 #define RUNNINGGAMEMODE_H
 
+#include <QObject>
 #include <vector>
+#include <string>
 
-using std::vector;
+using std::vector; using std::string;
 
-//This class is just simulated for Graphical User Interface in coding and testing process. This will be replaced by the real class of GUI when it's appropriate
 class MainWindow;
 class CommandHandler;
 class Game;
+class SettingRule;
 
-class RunningGameMode
+class RunningGameMode : public QObject
 {
+    Q_OBJECT;
+
     private:
         MainWindow *mainWindow;
         CommandHandler *invoker;
         Game *game;
+        SettingRule *curSettingRule;
 
     public:
         RunningGameMode();
-        RunningGameMode(int numPlayer); //In fact this will be a config class contain setting used in a game
+        RunningGameMode(int numPlayer, vector< vector<string> >, SettingRule *curSettingRule); //In fact this will be a config class contain setting used in a game
         ~RunningGameMode();
 
+        void notifyGameOver();
+
         CommandHandler *getCommandHandler();
-        void debugAddIdChose(int idPlayer, int idCell);
-};
 
-class GUI
-{
-    public:
-        //The cell and player conduct the command from GUI
-        vector <int> listIdChose;
+    signals:
+        void gameOver();
+        void showSetting();
 
-    friend RunningGameMode;
+    private slots:
+        void receiveShowSettingRequest();
 };
 
 #endif

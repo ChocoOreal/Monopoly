@@ -13,8 +13,6 @@ myModelView::myModelView()
     //WILL DELETING: check show cell info
     cellData = new QStandardItemModel(4, 4);
     cellDataSwap = new QStandardItemModel(4, 4);
-    for (int i = 1; i <= 40; i++) this->updateCellData(i, vector<string>(10, std::to_string(i) ) );
-
 
     //Make label header for cell model
     QStringList headerList;
@@ -60,8 +58,6 @@ void myModelView::setTypeFilterProperty(const string &type, const QString &playe
 //Update cell model by info given by Update command class
 void myModelView::updateCellData(int idCell, vector <string> info)
 {
-    info[9] = getNameOfIdPlayer( std::stoi(info[9]) ).toStdString();
-
     for (size_t i = 0; i < info.size(); i++)
     {
         QStandardItem* item = new QStandardItem( QString::fromStdString(info[i]) );
@@ -76,14 +72,31 @@ void myModelView::updatePlayerData(int idPlayer, vector<string> info)
     for (size_t i = 0; i < info.size(); i++)
     {
         QStandardItem* item = new QStandardItem( QString::fromStdString(info[i]) );
-        playerData->setItem(idPlayer - 1, i, item);
-        playerDataSwap->setItem(i, idPlayer-1, item->clone());
+        playerData->setItem(idPlayer, i, item);
+        playerDataSwap->setItem(i, idPlayer, item->clone());
     }
 }
 
-QString myModelView::getNameOfIdPlayer(int idPlayer)
+vector<string> myModelView::queryInforPlayer(int idPlayer)
 {
-    return ( (idPlayer >= 0 && idPlayer < Player::InstanceCount) ? playerData->index(idPlayer - 1, 1).data().toString() : "");
+    if (idPlayer >= playerData->rowCount() ) return {};
+
+    vector<string> result;
+
+    for (int i = 0; i < playerData->columnCount(); i++)
+        result.push_back( playerData->index(idPlayer, i).data().toString().toStdString() );
+
+    return result;
+}
+
+bool myModelView::canBuy(int id)
+{
+    if (id > cellData->rowCount() + 1) return false;
+
+    QString typeCell = cellData->index(id-1, 1).data().toString();
+    QString owner = cellData->index(id-1, 9).data().toString();
+
+    if ( (typeCell == "normalland" || typeCell == "factory" || typeCell == "railroad") && (owner == "No") ) return true; else return false;
 }
 
 myModelView::~myModelView()

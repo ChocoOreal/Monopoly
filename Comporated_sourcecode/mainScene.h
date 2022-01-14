@@ -6,24 +6,32 @@
 #include <QGraphicsSceneMouseEvent>
 
 class CellItem;
+class MainWindow;
 
 class MainScene : public QGraphicsScene
 {
+    Q_OBJECT
+
 private:
+    MainWindow* mainWindow;
     CellItem *cellItem[41];
     QGraphicsPixmapItem *board;
     QGraphicsPixmapItem *diceImage[2];
+    QGraphicsRectItem* locate[4];
 
 public:
-    QGraphicsPixmapItem *piece = nullptr; //CHANGE: this will be private
+    QGraphicsPixmapItem *piece[4] = {nullptr};
 
 public:
     explicit MainScene(QObject *parent = nullptr);
 
-    void setupMainScene();
+    void setupMainScene(int numPlayer);
     void setupCell();
     void setDiceImage(int number, int idDice);
-    void setPiece(QGraphicsPixmapItem *&piece, int idCell);
+    void setPiece(int idPlayer, int idCell);
+    void setHouse(int idCell, int numberOfHouse);
+    void chooseCell(int idCell);
+    void colorCellAsOwner(int idCell, Qt::GlobalColor color);
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 

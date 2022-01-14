@@ -16,13 +16,18 @@ SOURCES += \
     Player.cpp \
     RunningGameMode.cpp \
     Util.cpp \
+    animatetext.cpp \
     cellitem.cpp \
+    labelinformationplayer.cpp \
     main.cpp \
     mainScene.cpp \
+    mainprogrammanager.cpp \
     mainwindow.cpp \
     mymodelview.cpp \
+    playersetupmanager.cpp \
     propertymanager.cpp \
-    qmybutton.cpp
+    settingrule.cpp \
+    setuprule.cpp
 
 HEADERS += \
     Cell.h \
@@ -34,12 +39,18 @@ HEADERS += \
     Player.h \
     RunningGameMode.h \
     Util.h \
+    animatetext.h \
     cellitem.h \
+    gamecomponents.h \
+    labelinformationplayer.h \
     mainScene.h \
+    mainprogrammanager.h \
     mainwindow.h \
     mymodelview.h \
+    playersetupmanager.h \
     propertymanager.h \
-    qmybutton.h
+    settingrule.h \
+    setuprule.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -47,9 +58,11 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 FORMS += \
-    Welcome.ui \
+    mainprogrammanager.ui \
     mainwindow.ui \
-    propertymanager.ui
+    playersetupmanager.ui \
+    propertymanager.ui \
+    setuprule.ui
 
 RESOURCES += \
     resources.qrc

@@ -3,6 +3,9 @@
 #include "Command.h"
 #include "Game.h"
 #include "mainwindow.h"
+#include "settingrule.h"
+
+/* Remove mainwindow.h and all relevant class for running in VSCode */
 
 RunningGameMode::RunningGameMode()
 {
@@ -11,30 +14,43 @@ RunningGameMode::RunningGameMode()
     game = nullptr;
 }
 
-RunningGameMode::RunningGameMode(int numPlayer)
+RunningGameMode::RunningGameMode(int numPlayer, vector< vector<string> > playerInformation, SettingRule *curSettingRule)
 {
-    mainWindow = new MainWindow;
+    mainWindow = new MainWindow(numPlayer);
     invoker = new CommandHandler;
-    game = new Game(numPlayer);
+    game = new Game(numPlayer, playerInformation, this, curSettingRule);
+    RunningGameMode::curSettingRule = curSettingRule;
 
-    invoker->addFixedCommand( new GoCommand(game, &game->_idTurnPlayer) );
-    invoker->addFixedCommand( new PassCommand(game, &game->_idTurnPlayer) );
-    invoker->addFixedCommand( new BuyCommand(game, &game->_idTurnPlayer) );
+    invoker->addFixedCommand( new GoCommand(game) );
+    invoker->addFixedCommand( new PassCommand(game) );
+    invoker->addFixedCommand( new BuyCommand(game) );
     invoker->addFixedCommand( new Build(game, &mainWindow->idChose) );
     invoker->addFixedCommand( new SellCommand(game, &mainWindow->idChose) );
     invoker->addFixedCommand( new Mortage(game, &mainWindow->idChose) );
     invoker->addFixedCommand( new Redeem(game, &mainWindow->idChose) );
-    invoker->addFixedCommand( new NotifyCommand(game, mainWindow) );
-    invoker->addFixedCommand(new Update(game, mainWindow) );
+    invoker->addFixedCommand( new NotifyCommand(game, mainWindow, game->_notification) );
+    invoker->addFixedCommand( new Update(game, mainWindow) );
+    invoker->addFixedCommand( new BankruptCommand(game, &mainWindow->idChose) );
+    invoker->addFixedCommand( new ExitGameCommand(game) );
 
     game->invoker = invoker;
     mainWindow->invoker = invoker;
+    game->syncData();
+    mainWindow->runWhenStart();
 
-    game->notifyChange("cell", 17);
-    game->notifyChange("cell", 16);
-    game->notifyChange("player", 1);
+    mainWindow->showMaximized();
 
-    mainWindow->show();
+    QObject::connect(mainWindow, &MainWindow::showSetting, this, &RunningGameMode::receiveShowSettingRequest);
+}
+
+void RunningGameMode::receiveShowSettingRequest()
+{
+    emit showSetting();
+}
+
+void RunningGameMode::notifyGameOver()
+{
+    emit gameOver();
 }
 
 RunningGameMode::~RunningGameMode()
@@ -47,13 +63,4 @@ RunningGameMode::~RunningGameMode()
 CommandHandler* RunningGameMode::getCommandHandler()
 {
     return invoker;
-}
-
-void RunningGameMode::debugAddIdChose(int idPlayer, int idCell)
-{
-    /*
-    mainWindow->listIdChose.clear();
-    mainWindow->listIdChose.push_back(idPlayer);
-    mainWindow->listIdChose.push_back(idCell);
-    */
 }

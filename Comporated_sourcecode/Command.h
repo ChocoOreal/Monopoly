@@ -8,6 +8,7 @@ class Player;
 class Cell;
 class Game;
 class MainWindow;
+class Notify;
 
 using std::vector;
 
@@ -30,31 +31,22 @@ class GameCommand : public Command
 
 class GoCommand : public GameCommand
 {
-    private:
-        int *_idTurnPlayer;
-
     public:
-        GoCommand(Game* game, int *_idTurnPlayer);
+        GoCommand(Game* game);
         void execute();
 };
 
 class PassCommand : public GameCommand
 {
-    private:
-        int *_idTurnPlayer;
-
     public:
-        PassCommand(Game* game, int *_idTurnPlayer);
+        PassCommand(Game* game);
         void execute();
 };
 
 class BuyCommand : public GameCommand
 {
-    private:
-        int *_idTurnPlayer;
-
     public:
-        BuyCommand(Game* game, int *_idTurnPlayer);
+        BuyCommand(Game* game);
         void execute();
 };
 
@@ -102,10 +94,11 @@ class NotifyCommand : public GameCommand
 {
     private:
         MainWindow *mainWindow;
+        Notify *notification;
 
     public:
-        NotifyCommand(Game *game, MainWindow *mainWindow) : GameCommand(game) {};
-        void execute() {};
+        NotifyCommand(Game *game, MainWindow *mainWindow, Notify *notification);
+        void execute();
 };
 
 class Update : public GameCommand
@@ -115,6 +108,23 @@ class Update : public GameCommand
 
     public:
         Update(Game *game, MainWindow *mainWindow);
+        void execute();
+};
+
+class BankruptCommand : public GameCommand
+{
+    private:
+        vector <int> *_idChose;
+
+    public:
+        BankruptCommand(Game *game, vector <int> *_idChose) : GameCommand(game) { BankruptCommand::_idChose = _idChose; }
+        void execute();
+};
+
+class ExitGameCommand : public GameCommand
+{
+    public:
+        ExitGameCommand(Game *game) : GameCommand(game) {};
         void execute();
 };
 

@@ -12,6 +12,7 @@ class Player
 {
     public:
         static int InstanceCount;
+        static int NumberLeftPlayer;
 
     private:
         //Access the interface of game
@@ -35,12 +36,17 @@ class Player
         // the Player id range from 0 to 3
         int _id;
 
+        bool _gameOver;
+        int _debtTo;
+
     public:
         // return the Player's current money
         float Money();
 
         // return the Player's current position on Board
         int Position();
+
+        bool IsGameOver();
 
         // return the Player's current Name
         string Name();
@@ -50,6 +56,10 @@ class Player
 
         // check whether the Player is in Jail or not
         bool isInJail();
+        int debtTo();
+
+        void setGameOver();
+        void setDebtTo(int idPlayer);
 
         int ID()
         {
@@ -58,7 +68,7 @@ class Player
 
     public:
         void changeInJail();
-        void changeInJail(bool);
+        
         // Increase (or decrease) Player's current money
         void changeMoney(const float &);
 
