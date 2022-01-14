@@ -87,6 +87,8 @@ void Game::initializeBoard() {
         // change according the the type and ID.
         
         changeTypeListCell(_listCell[ID], type, line);
+
+        // this only showing if the reading from file is ok or not :V.
         for(string x: _listCell[ID]->toString()){
             cout << x << ' ';
         }
@@ -102,9 +104,10 @@ void Game::initializePlayer(int numberOfPlayer)
     _idTurnPlayer = numberOfPlayer - 1;
     _listPlayer.resize(numberOfPlayer);
     
-    for (Player *&curPlayer : _listPlayer)
+    for (int i = 0; i < numberOfPlayer; ++i)
     {
-        curPlayer = new Player (this, "Hoang");
+        _listPlayer[i] = new Player (this, "Player " + std::to_string(i));
+        
     }
 }
 

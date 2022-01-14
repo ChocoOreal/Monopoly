@@ -37,11 +37,12 @@ int main()
 
     // return 0;
     
-    RunningGameMode g(4);
+    // RunningGameMode g(4);
     
-    Railroad r ("3 @ normalland @ land @ this is a land for building house and hotel @ 5000 @ 1000 @ 1.8 @ 300 @ 230");
-    int p;
-    r.buyLand(3, p);
+    // Railroad r ("3 @ normalland @ land @ this is a land for building house and hotel @ 5000 @ 1000 @ 1.8 @ 300 @ 230");
+    // int p;
+    // r.buyLand(3, p);
+    cout << Dice::Rand(1, 100) << '\n';
 
     return 0;
 }
