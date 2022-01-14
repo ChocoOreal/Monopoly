@@ -1,7 +1,10 @@
 #include "Game.h"
 #include "Player.h"
 #include "Cell.h"
+
 #include "Dice.h"
+#include <random>
+
 #include "CommandHandler.h"
 #include "gamecomponents.h"
 #include <iostream>
@@ -100,8 +103,11 @@ void Game::syncData()
 
 void Game::rollDice()
 {
-    _dice1 = Dice::Rand(1, 6);
-    _dice2 = Dice::Rand(1, 6);
+    std::random_device rd; // obtain a random number from hardware
+    std::mt19937 gen(rd()); // seed the generator
+    std::uniform_int_distribution<> Dice(1, 6);
+    _dice1 = Dice(gen);
+    _dice2 = Dice(gen);
 
     notifyChange("dice");
 }

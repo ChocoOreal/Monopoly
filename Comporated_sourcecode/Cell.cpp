@@ -4,7 +4,7 @@
 #include "Util.h"
 #include <string>
 #include <sstream>
-
+#include <random>
 using std::string; using std::stringstream;
 
 IGame* Cell::iGame = nullptr;
@@ -77,8 +77,12 @@ Card::Card(const string &information) : Cell(information) {
 void Card::drawCard () {
 
     //@ chu tren the @ gia tri cua the (duong hoac am)\n
-    int type = Dice::Rand(1, 2);
-    int i = Dice::Rand(1, 6);//random
+    std::random_device rd; // obtain a random number from hardware
+    std::mt19937 gen(rd()); // seed the generator
+    std::uniform_int_distribution<> Card(1, 2);
+    std::uniform_int_distribution<> Dice(1, 6);
+    int type = Card(gen);
+    int i = Dice(gen); //random
 
     string card;
     if (type == 1) {
